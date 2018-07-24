@@ -1,0 +1,127 @@
+// 背景图片
+bg-image($url)
+  background-image: url($url)
+  @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3)
+    background-image: url($url)
+
+// 不换行
+no-wrap()
+  text-overflow: ellipsis
+  overflow: hidden
+  white-space: nowrap
+
+// 扩展点击区域
+extend-click()
+  position: relative
+  &:before
+    content: ''
+    position: absolute
+    top: -10px
+    left: -10px
+    right: -10px
+    bottom: -10px
+
+//公共方法定义
+
+//计算
+rem(){
+  1920/15
+}
+
+calc(v){
+  unit(v/rem(),'rem')
+}
+
+/* 宽高 */
+
+wh(w,h){
+    width:w;
+    height:h;
+}
+
+whp($w,$h){
+    width:$w;
+    height:$h;
+}
+
+whn(w,h){
+    width:w;
+    height:h;
+}
+
+
+/* 形状 */
+
+br(){
+  border-radius:0;
+}
+
+/* 位置 */
+ab(l,t){
+  position:absolute;
+  left:l;
+  top:t;
+}
+
+abs(){
+  position:absolute;
+  
+}
+
+mpInit(){
+  margin:0;
+  padding:0;
+}
+
+rp(){
+  position:relative;
+  left:0;
+  top:0;
+}
+
+hh(h){
+  height:h;
+  line-height:h;
+}
+
+mg(l,t){
+  margin-left:l;
+  margin-top:t;
+}
+
+initp(){
+  padding:0;
+}
+
+abcenterX(l,t,x){
+  position:absolute;
+  left:l;
+  top:t;
+  margin-left:x;
+}
+
+abcenterXY(l,t,x,y){
+  position:absolute;
+  left:l;
+  top:t;
+  margin-left:x;
+  margin-top:y;
+}
+
+flex(){
+  display:flex;
+  flex-direction:row;
+  flex-wrap:no-wrap;
+  justify-content:space-between;
+}
+
+/* 背景 */
+bgImg(src){
+  background-image:url(src);
+  background-repeat:no-repeat;
+  background-size:100% 100%;
+}
+
+bgColor(color){
+  background-color:color;
+}
