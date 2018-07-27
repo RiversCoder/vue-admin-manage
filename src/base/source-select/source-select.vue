@@ -53,7 +53,7 @@
 
             //计算svg的大小
             resize(){
-              window.addEventListener('resize',this.setSvgData);
+              //window.addEventListener('resize',this.setSvgData);
             },
 
            setSvgData(){

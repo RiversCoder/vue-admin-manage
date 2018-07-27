@@ -68,6 +68,7 @@ export default {
           "weeks":  w,
           "template": 1
         }
+        
     },
 
     randomString(len) {

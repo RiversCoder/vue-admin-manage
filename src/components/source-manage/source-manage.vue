@@ -9,9 +9,9 @@
                         <div class="grid-content-header" v-show="true">
                            <div class="btn-contents">
                                 <p style="display:none"><input name="file" type="file" value="选择" size="20" id="fileUpload1" accept="image/png,image/gif,image/jpeg,video/mp4,application/ogg, audio/ogg,video/3gpp" @change ="changeUploadFile($event)" /></p>  
-                                <el-button plain class="rbtn uploadFile" @click.native="uploadFileBtn" >上傳文件</el-button>
-                                <el-button plain class="rbtn newFolder" @click.native="newFolder" >新建文件夾</el-button>
-                                <el-button plain class="rbtn backFolder" @click.native="backLast" v-show="backBtnShow">返回上一級</el-button>
+                                <el-button plain class="rbtn uploadFile" @click.native="uploadFileBtn" >上传文件</el-button>
+                                <el-button plain class="rbtn newFolder" @click.native="newFolder" >新建文件夹</el-button>
+                                <el-button plain class="rbtn backFolder" @click.native="backLast" v-show="backBtnShow">返回上一级</el-button>
                                 <el-progress :percentage="progress" class="progress-line" v-show="showProgress" color="#ed1c24"></el-progress>
                            </div>
                         </div>
@@ -19,7 +19,7 @@
                   
                   <!-- 目录 -->
                   <div class="catalogs" v-show="backBtnShow" ref="muluBox">
-                        <span class="cl-fixed"><i class="ci-icon"></i>文件夾 <i class="ci-line">|</i> </span>
+                        <span class="cl-fixed"><i class="ci-icon"></i>文件夹 <i class="ci-line">|</i> </span>
                         <span class="cl-mulu">
                             <ul class="floder-lists" >
                                 <!-- <li class="list-item"> <span class="fname">所有文件</span> <span class="segmentation">></span></li> -->
@@ -46,10 +46,10 @@
             
          <el-dialog  :visible.sync="dialogTableVisible" >
              <el-table :data="folderSelctsData" width="500">
-              <el-table-column property="name" label="文件夾名稱" align="center"></el-table-column>
-              <el-table-column property="name" label="點擊選擇" align="center">
+              <el-table-column property="name" label="文件夹名称" align="center"></el-table-column>
+              <el-table-column property="name" label="点击选择" align="center">
                   <template slot-scope="scope">
-                    <el-button size="mini" type="danger" @click="handleDelete(scope.row)">選擇</el-button>
+                    <el-button size="mini" type="danger" @click="handleDelete(scope.row)">选择</el-button>
                   </template>
               </el-table-column>
             </el-table>
@@ -166,7 +166,7 @@
                     }else{
                         this.$message({
                           type: 'danger',
-                          message: '獲取資源失敗!'
+                          message: '获取资源失败!'
                         });
                     }
                 });
@@ -194,8 +194,8 @@
             },
             //新建文件夹
             newFolder(){
-              this.$prompt('請輸入文件夾名稱', 'DBS溫馨提示', {
-                confirmButtonText: '確定',
+              this.$prompt('请输入文件夹名称', '提示', {
+                confirmButtonText: '确定',
                 cancelButtonText: '取消'
               }).then(({ value }) => {
 
@@ -203,7 +203,7 @@
                 if(!tool.strim(value,'g')){
                    this.$message({
                       type: 'error',
-                      message: '新建文件夾失敗,名稱不能爲空!'
+                      message: '新建文件夹失败,名称不能爲空!'
                     });
                    return;
                 }
@@ -217,7 +217,7 @@
                   if(v[i]){
                     this.$message({
                         type: 'error',
-                        message: '非法名稱格式，名稱中不能帶有正反斜杠!'
+                        message: '非法名称格式，名称中不能带有正反斜杠!'
                       });
                      return;
                   }
@@ -254,7 +254,7 @@
               }).catch(() => {
                 this.$message({
                   type: 'info',
-                  message: '取消輸入'
+                  message: '取消输入'
                 });       
               });
             },
@@ -266,7 +266,7 @@
                     if(res.data.status == 'success'){
                         this.$message({
                           type: 'success',
-                          message: '新建文件夾成功!'
+                          message: '新建文件夹成功!'
                         });
                         //再次重新加载数据
                         this.initSources();
@@ -342,7 +342,7 @@
                         if(this.progress == '100'){
                             this.$notify({
                               title: '成功',
-                              message: '恭喜你，上傳文件成功！',
+                              message: '恭喜你，上传文件成功！',
                               type: 'success',
                               duration: 2500
                             });
@@ -429,7 +429,7 @@
                     var lastDir = arr.join('/');
                     this.folderSelctsData.unshift({
                         dir: lastDir,
-                        name: '上一級',
+                        name: '上一级',
                         last: true
                     })
                 }

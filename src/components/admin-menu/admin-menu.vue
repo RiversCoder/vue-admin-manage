@@ -18,7 +18,7 @@
                 <li class="mitem mitem2">
                     <router-link to="/source-manage">
                         <span class="micon"></span>
-                        <span class="mtext">資源管理</span>
+                        <span class="mtext">资源管理</span>
                     </router-link>
                 </li>
                 <li class="mitem mitem3">
@@ -36,7 +36,7 @@
                 <li class="mitem mitem5">
                     <router-link to="/store">
                         <span class="micon"></span>
-                        <span class="mtext">存儲與賬號</span>
+                        <span class="mtext">存储与账号</span>
                     </router-link>
                 </li>
                 <li class="mitem mitem6">
@@ -48,7 +48,7 @@
                 <li class="mitem mitem7">
                     <router-link to="/help">
                         <span class="micon"></span>
-                        <span class="mtext">幫助</span>
+                        <span class="mtext">帮助</span>
                     </router-link>
                 </li>
             </ul>
@@ -57,10 +57,10 @@
 
         <div class="outLoginbox" @click="logoutFn">
             <span class="outloginimg"></span>
-            <span class="outlogintext">退出登錄</span>
+            <span class="outlogintext">退出登录</span>
         </div>
       
-        <!-- 彈出信息組件 -->
+        <!-- 弹出信息组件 -->
         <alert-info :content="alertInfo" @cancelBox="closeInfoBox" :dialogVisible="dialogVisible"></alert-info>
 
       </div>
@@ -91,7 +91,7 @@
                   <li class="mitem mitem2">
                       <router-link to="/source-manage">
                           <span class="micon"></span>
-                          <span class="mtext">資源管理</span>
+                          <span class="mtext">资源管理</span>
                       </router-link>
                   </li>
                   <li class="mitem mitem3">
@@ -109,14 +109,14 @@
                   <li class="mitem mitem5">
                       <router-link to="/store">
                           <span class="micon"></span>
-                          <span class="mtext">存儲與賬號</span>
+                          <span class="mtext">存储与账号</span>
                       </router-link>
                   </li>
                   
                   <li class="mitem mitem7">
                       <router-link to="/help">
                           <span class="micon"></span>
-                          <span class="mtext">幫助</span>
+                          <span class="mtext">帮助</span>
                       </router-link>
                   </li>
                   <li class="mitem mitem8" @click="logoutFn">
@@ -127,16 +127,14 @@
           </div>
 
         </div>
-
-       
-
+   
 
       <!--   <div class="outLoginbox" @click="logoutFn">
           <span class="outloginimg"></span>
-          <span class="outlogintext">退出登錄</span>
+          <span class="outlogintext">退出登录</span>
       </div>
             
-      彈出信息組件
+      弹出信息组件
       <alert-info :content="alertInfo" @cancelBox="closeInfoBox" :dialogVisible="dialogVisible"></alert-info> -->
 
       </div>
@@ -147,7 +145,7 @@
 <script>
     import tool from '@/common/js/tool.js'
     import AlertInfo from '@/components/alert-info/alert-info'
-    import {mapGetters, mapMutations, mapActions} from 'vuex';
+    import {mapState, mapGetters, mapMutations, mapActions} from 'vuex';
 
     export default{
         data(){
@@ -156,12 +154,12 @@
                 isRender : true,
                 isCollapse: false,
                 dialogVisible: false,
-                alertInfo : '確認退出後台?'
+                alertInfo : '确认退出后台?'
             }
         },
         created(){
           /*this.dialogVisible= false
-          this.alertInfo = '確認退出後台？'*/
+          this.alertInfo = '确认退出后台？'*/
         },
         methods: {
           menuSpread(){
@@ -180,8 +178,8 @@
           },
           logoutFn(){
             
-            this.$alert('是否要退出後台？', 'DBS溫馨提示', {
-              confirmButtonText: '確定',
+            this.$alert('是否要退出后台？', '提示', {
+              confirmButtonText: '确定',
               callback: action => {
                  if(action == 'confirm'){
                     
@@ -225,18 +223,18 @@
              close.classList.toggle('closeBtnBoxActive');
 
              if(close.classList.contains('closeBtnBoxActive')){
-               //菜單移動動畫
+               //菜单移动动画
                ml.style.WebkitTransform = 'translate3d(0,0,0)';
                ml.style.transform = 'translate3d(0,0,0)';
                ml.style.opacity = 1;
              }else{
-               //菜單移動動畫
+               //菜单移动动画
                ml.style.WebkitTransform = 'translate3d(0,-450px,0)';
                ml.style.transform = 'translate3d(0,-450px,0)';
                ml.style.opacity = 0;
              }
           },
-          //監聽鼠標移出
+          //监听鼠标移出
           listener(){
             var ml = this.$refs.menuList;
             var close = this.$refs.closeBtn;

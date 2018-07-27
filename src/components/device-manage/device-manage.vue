@@ -75,7 +75,14 @@
                 ids.push(this.dataset.id);
               });
 
-             
+             if(ids.length == 0){
+               this.$message({
+                  type: 'warning',
+                  message: '请选择设备',
+                  showClose: true
+                });
+              return;
+             }
 
               //上线设备
               this.$axios.post(this.publishStatusUrl,{

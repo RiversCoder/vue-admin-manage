@@ -3,14 +3,21 @@
       <header class="header-file" style="min-height:108px">
             <div class="grid-content grid-content-1">
                <h3 class="drag-cc-title">素材拖拽排序</h3>
-               <!-- <h3 class="drag-cc-title drag-cc-title-mobile">素材點擊排序</h3> -->
+               <!-- <h3 class="drag-cc-title drag-cc-title-mobile">素材点击排序</h3> -->
             </div>
             <div class="grid-content grid-content-2">
-                <p style="display:none"><input name="file" type="file" value="選擇" size="20" id="fileUpload1" accept="image/png,image/gif,image/jpeg,video/mp4,application/ogg, audio/ogg,video/3gpp" @change ="changeUploadFile($event)" /></p>  
+                <p style="display:none"><input name="file" type="file" value="选择" size="20" id="fileUpload1" accept="image/png,image/gif,image/jpeg,video/mp4,application/ogg, audio/ogg,video/3gpp" @change ="changeUploadFile($event)" /></p>  
                 <el-button plain class="rbtn uploadFile" @click.native="nextBtn">提交</el-button>
                 <el-button plain class="rbtn newFolder" @click.native="lastBtn">上一步</el-button>
             </div>
       </header>
+      
+      
+      <!-- 选择模板 -->
+      <div class="select-special-box">
+        
+      </div>      
+
 
       <el-main>
           <el-scrollbar>
@@ -49,16 +56,16 @@
             }
         },
         methods:{
-            //初始化數據
+            //初始化数据
             init(){
               this.selectData = [];
               var data = [];
               
-              //獲取當前本地的file_list數據
+              //获取当前本地的file_list数据
               data = tool.lget('file_list_'+this.$route.query.direct);
 
-              this.selectData = data;
-
+              this.selectData = pc.addEffectPage(data);
+              console.log(this.selectData);
               this.setResults(this.selectData);
             },
             ...mapMutations({
@@ -71,10 +78,10 @@
             initPos(cindex,dindex){
               
               
-              //重新計算位置
+              //重新计算位置
               this.countPos(cindex,dindex);
 
-              //替換DOM位置
+              //替换DOM位置
               var parent = document.getElementById('item-drag-box-wrap');
               var childs = parent.getElementsByClassName('item-drag-box');
               //console.log(cindex,dindex)
@@ -82,7 +89,7 @@
               
               //重新排列位置
               this.arrangePos(parent,'item-drag-box');
-              //重新綁定
+              //重新绑定
               this.bindDrag();  
             },
             countPos(ci,di){
@@ -134,13 +141,13 @@
                 return;
               }
 
-              //檢測當前設備是移動端還是PC
+              //检测当前设备是移动端还是PC
               var sets = tool.etectmob();
 
               if(sets){
-                //移動端的拖拽
+                //移动端的拖拽
                 for(var i=0;i<childs.length;i++){
-                  //設置拖拽
+                  //设置拖拽
                   childs[i].index = i;
                   tools.mdrag(childs[i],childs,'desktopIcons',(cindex,index)=>{
                       this.initPos(cindex,index);
@@ -150,10 +157,12 @@
 
                 //PC端的拖拽
                 for(var i=0;i<childs.length;i++){
-                  //設置拖拽
+                  //设置拖拽
                   childs[i].index = i;
                   tools.drag(childs[i],childs,'desktopIcons',(cindex,index)=>{
                       this.initPos(cindex,index);
+                  },(citem,cindex,index)=>{
+                      $(citem).toggleClass('item-drag-box-active');
                   });
                 }
 
@@ -164,7 +173,7 @@
             lastBtn(){
               this.$router.back(-1);
             },
-            //組裝節目數據
+            //组装节目数据
             createStructor(data){
                 var attr = {
                     "file_name":"file1",
@@ -183,10 +192,12 @@
                       "file_type": data[i]['file_type'],
                       "download_url": data[i]['download_url'],
                       "file_size": data[i]['file_size'],
-                      "file_duration": data[i]['file_duration']
+                      "file_duration": data[i]['file_duration'],
+                      "playType": data[i]['playType'],
+                      "times": data[i]['times']
                     });
                 }
-                //設置素材展示的本地緩存
+                //设置素材展示的本地缓存
                 tool.lset('file_list_'+this.$route.query.direct,[]);
                 
                 //将素材序列存在vuex状态树中
@@ -207,14 +218,15 @@
             //提交
             nextBtn(){
               
-              //首先把數據保存到本地 然後提交到數據庫
+              //首先把数据保存到本地 然后提交到数据库
               this.createStructor(this.selectData);
-
-              //跳轉到拖拽面板頁面
+              
+              //跳转到拖拽面板页面
               this.$router.push({
                 path: '/pc/pe',
                 query: {
-                  stype: 'model'
+                  stype: 'model',
+                  mid: this.getModelId
                 }
               });
             },

@@ -4,7 +4,7 @@
           <h3 class="column-title">设备</h3>
           <div class="column-content">
                 
-               <div v-show="allsources.length==0" style="font-size:16px;color:#333;height:60px;line-height:60px;text-indent:30px;">暫無设备資源，請添加设备資源！</div>
+               <div v-show="allsources.length==0" style="font-size:16px;color:#333;height:60px;line-height:60px;text-indent:30px;">暂无设备资源，请添加设备资源！</div>
 
                 <dl class="cc-item" v-for="(item,index) in allsources" @click="clickActive(item.pushId)"  :data-id="item.pushId">
                       
@@ -79,8 +79,8 @@
 
              console.log(this.allsources);
 
-             this.$prompt('請輸入设备名稱', '溫馨提示', {
-                confirmButtonText: '確定',
+             this.$prompt('请输入设备名称', '提示', {
+                confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 inputValue: cname
               }).then(({ value }) => {
@@ -89,7 +89,7 @@
                 if(!tool.strim(value,'g')){
                    this.$message({
                       type: 'error',
-                      message: '修改名稱失敗,名稱不能爲空!'
+                      message: '修改名称失败,名称不能爲空!'
                     });
                    return;
                 }
@@ -103,7 +103,7 @@
                   if(v[i]){
                     this.$message({
                         type: 'error',
-                        message: '非法名稱格式，名稱中不能帶有正反斜杠!'
+                        message: '非法名称格式，名称中不能带有正反斜杠!'
                       });
                      return;
                   }
@@ -136,7 +136,7 @@
               }).catch(() => {
                 this.$message({
                   type: 'info',
-                  message: '取消輸入'
+                  message: '取消输入'
                 });       
               });
           },

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import ElementUi from '@/components/element-ui/element-ui'
+import axios from 'axios'
 import Home from '@/components/home/home'
 import SourceManage from '@/components/source-manage/source-manage'
 import ProgramProduction from '@/components/program-production/program-production'
@@ -21,6 +22,7 @@ import PC from '@/components/pc/pc'
 import DeviceManage from '@/components/device-manage/device-manage'
 
 import ListView from '@/base/list-view/list-view'
+import ItemView from '@/base/item-view/item-view'
 import Histogram from '@/base/histogram/histogram'
 import On from '@/base/on/on'
 import Off from '@/base/off/off'
@@ -31,6 +33,7 @@ import SourceSelect from '@/base/source-select/source-select'
 import TimeChart from '@/base/time-chart/time-chart'
 import IB from '@/base/interactive-box/interactive-box'
 import IS from '@/base/interactive-select/interactive-select'
+import TF from '@/base/transform/transform'
 
 import store from '../store/index'
 import * as types from '../store/mutation-types'
@@ -49,7 +52,7 @@ const router =  new Router({
           component: Home,
           meta: { 
             requireAuth: true,
-            keepAlive: true // 需要被缓存
+            keepAlive: false // 需要被缓存
           }
         },
         {
@@ -200,6 +203,11 @@ const router =  new Router({
       path: '/login',
       component: Login,
       keepAlive: false 
+     },
+    {
+      path: '/tf',
+      component: TF,
+      keepAlive: false 
      }//,
     // {
     //   path: '/reset',
@@ -246,18 +254,40 @@ if (window.localStorage.getItem('token')) {
 }
 
 // 判断是否需要登录权限 以及是否登录
-/*router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
   if (to.matched.some(res => res.meta.requireAuth)) { // 判断是否需要登录权限
-    if (localStorage.getItem('token')) { // 判断是否登录
-      next()
-    } else { // 没登录则跳转到登录界面
-      next({
-        path: '/login'
-      })
+
+    //console.log(from,to);
+
+    //判断是不是直接进入 如果直接进入验证token是否合法
+    if(from.path === '/' && to.path === '/home'){
+      if(localStorage.getItem('token')){
+        var token = localStorage.getItem('token');
+        //验证token是否合法
+        axios.post('http://developsky.skylandertech.cn/api/user').then(res=>{
+          //console.log(res);
+          if(res.data.status.substr(0,1) == '4'){
+            next({
+              path: '/login'
+            });
+          }else{
+            next();
+          }
+        });
+      }
+    }else{
+      if (localStorage.getItem('token')) { // 判断是否登录
+        next()
+      } else { // 没登录则跳转到登录界面
+        next({
+          path: '/login'
+        })
+      }
     }
+
   } else {
     next()
   }
-})*/
+})
 
 export default router

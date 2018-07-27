@@ -61,7 +61,12 @@
               //console.log(this.dragBoxs,this.getAllDragBoxData);
               this.dragBoxs = this.getAllDragBoxData;
             },
-
+            initActive(){
+              console.log('123',this.$route.query.mid);
+              if(this.$route.query.mid){
+                this.setActiveClass(this.$route.query.mid);
+              }
+            },  
             initData(){
               
               //1. 初始化形状盒子对象
@@ -76,12 +81,14 @@
                 var timeList = pc.deleteAllDragBoxData(this.getTimeList,this.getCid);
                 this.setTimeList(timeList);
               }
+
+
               
             },
 
             //计算svg的大小
             resize(){
-              window.addEventListener('resize',this.setSvgBoxData);
+              //window.addEventListener('resize',this.setSvgBoxData);
             },
             //设置形状盒子宽高
            setSvgBoxData(){
@@ -307,7 +314,7 @@
                     $(elem).removeClass('selectActive');
                     
                     if(elem.dataset.mid == mid){
-                        $(this).addClass('selectActive');
+                      $(this).addClass('selectActive');
                     }
                 })
             },
@@ -360,6 +367,11 @@
 
           //初始化各类交互事件
           this.initEvent();
+
+          var t = setTimeout(()=>{
+            this.initActive();
+            clearTimeout(t);
+          },300)
         },
         updated(){
           this.setWrapperBoxInit();
@@ -368,6 +380,8 @@
           this.setSvgBoxData();
           this.initDragData();
           this.initDragBoxs();
+
+          
         },
         components:{
           

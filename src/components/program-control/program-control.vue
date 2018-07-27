@@ -54,18 +54,18 @@
         },
         methods:{
             initContainer(){
-                var ms = this.$refs.content;
-                var hh = document.body.offsetHeight;
-                ms.style.overflow = 'hidden';
-                window.addEventListener('resize',fn);
+                // var ms = this.$refs.content;
+                // var hh = document.body.offsetHeight;
+                // ms.style.overflow = 'hidden';
+                // window.addEventListener('resize',fn);
                 
 
-                function fn(){
-                    hh = document.body.offsetHeight;
-                    ms.style.height = hh + 'px';
-                }
+                // function fn(){
+                //     hh = document.body.offsetHeight;
+                //     ms.style.height = hh + 'px';
+                // }
 
-                fn();    
+                // fn();    
             }
             
         },

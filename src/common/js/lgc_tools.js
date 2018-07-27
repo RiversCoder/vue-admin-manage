@@ -50,7 +50,7 @@ var tools =
 			};
 		}
 	},
-	drag : function(obj,arr,check,fn)   //拖拽元素 并且生成 克隆元素
+	drag : function(obj,arr,check,fn,cfn)   //拖拽元素 并且生成 克隆元素
 	{	
 		var This = this;
 		// var outBoxIcon = document.getElementById('iconsBox');
@@ -60,6 +60,10 @@ var tools =
 		obj.onmousedown = function(ev)
 		{	
 			var ev = ev || window.event;
+			var soX = ev.clientX;
+			var soY = ev.clientY;
+			var eoX = ev.clientX;
+			var eoY = ev.clientY;
 			var sX = ev.clientX - this.getBoundingClientRect().left;
 			var sY = ev.clientY - this.getBoundingClientRect().top;
 
@@ -83,6 +87,10 @@ var tools =
 			document.onmousemove = function(ev)
 			{	
 				var ev = ev || window.event;
+
+				eoX = ev.clientX;
+				eoY = ev.clientY;
+
 
 				var eX = ev.clientX - sX;
 				var eY = ev.clientY - sY;
@@ -109,7 +117,16 @@ var tools =
 					eY = disH;
 				}
 
-				//console.log(eY,eX);
+				//console.log(soX,soY,eoX,eoY);
+				
+				//检测 点击下的操作
+				if( Math.sqrt( Math.pow(eoX-soX,2)+Math.pow(eoY-soY,2) ) < 10 ){
+
+					//console.log( Math.sqrt( Math.pow(eoX-soX,2) + Math.pow(eoY-soY,2) ))
+
+					return;
+				}
+				
 				//运动
 				clone.style.opacity = 1;
 				clone.style.left  = eX +  'px';
@@ -131,6 +148,20 @@ var tools =
 				//var parentBox = This.$(document,'#appsFConBox');
 				//var parentDeskBox = This.$(document,'#iconsBox');
 
+				document.body.removeChild(clone);
+				document.onmousemove = document.onmouseup = null;
+
+
+				if( Math.sqrt( Math.pow(eoX-soX,2)+Math.pow(eoY-soY,2) ) < 10  ){
+
+					//console.log( Math.sqrt( Math.pow(eoX-soX,2) + Math.pow(eoY-soY,2) ));
+					
+					cfn&&cfn(obj,obj.index,lastIndex);
+
+					return;
+				}
+
+
 				if(check == 'desktopIcons')
 				{
 					//清除样式
@@ -139,10 +170,9 @@ var tools =
 					fn&&fn(obj.index,lastIndex);
 				}
 				
+				
 
-				//其他方法:
-				document.body.removeChild(clone);
-				document.onmousemove = document.onmouseup = null;
+				
 			};
 
 			ev.cancelBubble = true;

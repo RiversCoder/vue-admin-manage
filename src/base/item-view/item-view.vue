@@ -2,16 +2,19 @@
       
       <!--文件夹区域-->
         <div id="item-drag-box-wrap">
-          <div class="item-drag-box" v-for="(item,index) in sources" >
+          <div class="item-drag-box" v-for="(item,index) in sources" :data-id="item.id">
              <dl class="cc-item">
                  <dt class="cc-item-previewbox">
+                       
                        <span class="vcip-img">
                            <img :src="item.img" />
                        </span>
                        <span :class="item.file_type == '1' ? 'vcip-icon' : 'vcip-icon icip-icon' "></span>
                        <span class="vcip-name">{{item.file_name.length<12?item.file_name:item.file_name.substr(0,12)+'...'}}</span>
+                       <span class="vcip-effect">转场效果：{{item.playType}}</span>
                  </dt>
                  <span class="maskImg"></span>
+                 <span class="maskImgActive"></span>
              </dl>
            </div>
        </div>
@@ -21,7 +24,7 @@
          <h3 class="column-title">图片</h3>
          <div class="column-content" >
              <dl class="cc-item" v-for="(item,index) in imageSources" >
-                 <dt class="cc-item-previewbox">
+                 <dt class="cc-item-previewbox">s
                        <span class="vcip-img">
                            <img :src="item.src" />
                        </span>
@@ -38,7 +41,7 @@
 
 
 
-<script type="text/ecmascript-6">
+<script scoped>
     
     import {mapGetters, mapMutations, mapActions} from 'vuex';
     import tool from 'common/js/tool'
@@ -48,7 +51,7 @@
         data(){
             return{
                isExist: true,
-               sourcess:[]
+               sourcess:[{"file_name":"video12","file_type":1,"download_url":"https://skylander-dbs.oss-cn-hongkong.aliyuncs.com/zj0whcrh0a7d.mp4","file_duration":65,"file_size":4524494,"id":6,"img":"https://skylander-dbs.oss-cn-hongkong.aliyuncs.com/zj0whcrh0a7d.mp4?x-oss-process=video/snapshot,t_3000,f_jpg,w_800,h_600,m_fast"},{"file_name":"SPARKSmini-series–Episode1-Onceuponatime","file_type":1,"download_url":"https://skylander-dbs.oss-cn-hongkong.aliyuncs.com/4hxeyhuskwif.mp4","file_duration":326,"file_size":46722920,"id":7,"img":"https://skylander-dbs.oss-cn-hongkong.aliyuncs.com/4hxeyhuskwif.mp4?x-oss-process=video/snapshot,t_3000,f_jpg,w_800,h_600,m_fast"},{"file_name":"002","file_type":1,"download_url":"https://skylander-dbs.oss-cn-hongkong.aliyuncs.com/gwedr646njm5.mp4","file_duration":644,"file_size":127667051,"id":12,"img":"https://skylander-dbs.oss-cn-hongkong.aliyuncs.com/gwedr646njm5.mp4?x-oss-process=video/snapshot,t_3000,f_jpg,w_800,h_600,m_fast"},{"file_name":"005","file_type":1,"download_url":"https://skylander-dbs.oss-cn-hongkong.aliyuncs.com/4tqxlnbh1814.mp4","file_duration":760,"file_size":100873468,"id":13,"img":"https://skylander-dbs.oss-cn-hongkong.aliyuncs.com/4tqxlnbh1814.mp4?x-oss-process=video/snapshot,t_3000,f_jpg,w_800,h_600,m_fast"}]
             }
         },
         props: {
@@ -94,6 +97,7 @@
                     wh(100%,16px);hh(16px);font-weight:bold;color:#fff;font-size:16px;abcenterX(0,59px,0);text-align:center;
                 .cip-img
                     wh(236px,135px);border-radius:10px;
+                   
                 
                 /* 视频 */
                 .vcip-icon
@@ -103,20 +107,26 @@
                 .vcip-img
                     wh(100%,100%);ab(0,0);
                     img
-                      wh(100%,100%);border-radius:10px;             
+                      wh(100%,100%);border-radius:10px;
+                .vcip-effect
+                    font-size:12px;abs();right:10px;top:8px;color:#fff;                    
                 
                 /* 图片 */
                   
                 .icip-icon
                     wh(19px,19px);bgImg('~common/images/source/img@2x.png');
           .maskImg
-            display:block;wh(238px,135px);box-sizing:border-box;border-radius:10px;border:4px solid #5E8CEE;bgColor(#fff);opacity:0;ab(0,0);
+            display:none;wh(238px,135px);box-sizing:border-box;border-radius:10px;border:4px solid #5E8CEE;bgColor(#fff);opacity:0;ab(0,0);
+          .maskImgActive
+            display:none;wh(238px,135px);box-sizing:border-box;border-radius:10px;border:4px solid #5E8CEE;bgColor(#fff);opacity:0;ab(0,0);
         .cactive
             .maskImg
-              opacity:0.7;
+              display:block;opacity:0.7;
             .cc-item-previewbox
               .cip-name
                 color:#333;
-                    
-                    
+        .item-drag-box-active
+            .maskImgActive
+              display:block;opacity:1;border:3px solid #4696d1;background-color:rgba(70,150,209,0.3);
+                       
 </style>

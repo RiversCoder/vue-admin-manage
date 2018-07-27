@@ -2,8 +2,8 @@
    <div class="con-container">
       <div class="Column">
           
-          <h3 class="column-title">文件夾</h3>
-          <div v-show="sources.length==0" style="font-size:16px;color:#333;height:60px;line-height:60px;text-indent:30px;">暫無文件夾，請新建文件夾！</div>
+          <h3 class="column-title">文件夹</h3>
+          <div v-show="sources.length==0" style="font-size:16px;color:#333;height:60px;line-height:60px;text-indent:30px;">暂无文件夹，请新建文件夹！</div>
           
           <div class="column-content">
               <dl class="cc-item" v-for="(item,index) in sources" >
@@ -21,8 +21,8 @@
                   <dd class="cc-item-textbox">
                       <ul class="citms">
                           <li class="cit cit1" @click="renameFile(item.dir,item.name,item.id)">重命名</li>
-                          <li class="cit cit2" @click="moveFile(item.dir,item.fileType,item.name,item.id)">移動文件夾</li>
-                          <li class="cit cit3" @click="deleteFile(item.name,item.dir,item.id)">刪除</li>
+                          <li class="cit cit2" @click="moveFile(item.dir,item.fileType,item.name,item.id)">移动文件夹</li>
+                          <li class="cit cit3" @click="deleteFile(item.name,item.dir,item.id)">删除</li>
                       </ul>
                   </dd>
               </dl>
@@ -79,15 +79,15 @@
                 }else{
                     this.$message({
                       type: 'error',
-                      message: '獲取資源失敗!'
+                      message: '获取资源失败!'
                     });
                 }
             });
           },
           //点击重命名文件夹
           renameFile(cdir,cname,cid){
-             this.$prompt('請輸入文件夾名稱', 'DBS溫馨提示', {
-                confirmButtonText: '確定',
+             this.$prompt('请输入文件夹名称', '提示', {
+                confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 inputValue: cname
               }).then(({ value }) => {
@@ -97,7 +97,7 @@
                 if(!tool.strim(value,'g')){
                    this.$message({
                       type: 'error',
-                      message: '修改名稱失敗,名稱不能爲空!'
+                      message: '修改名称失败,名称不能爲空!'
                     });
                    return;
                 }
@@ -111,7 +111,7 @@
                   if(v[i]){
                     this.$message({
                         type: 'error',
-                        message: '非法名稱格式，名稱中不能帶有正反斜杠!'
+                        message: '非法名称格式，名称中不能带有正反斜杠!'
                       });
                      return;
                   }
@@ -162,7 +162,7 @@
               }).catch(() => {
                 this.$message({
                   type: 'info',
-                  message: '取消輸入'
+                  message: '取消输入'
                 });       
               });
           },
@@ -172,8 +172,8 @@
           },
           //删除文件
           deleteFile(cname,cdir,id){
-              this.$confirm('此操作將永久刪除該文件, 是否繼續?', '提示', {
-                confirmButtonText: '確定',
+              this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
               }).then(() => {
@@ -189,7 +189,7 @@
                     if(res.data.status == 'success'){
                          this.$message({
                           type: 'success',
-                          message: '成功刪除該文件夾!'
+                          message: '成功删除该文件夹!'
                         });
 
                         for(var i=0;i<this.source.length;i++){
@@ -201,7 +201,7 @@
                     }else{
                         this.$message({
                           type: 'danger',
-                          message: '文件夾刪除失敗!'
+                          message: '文件夹删除失败!'
                         });
                     }
                 });
@@ -211,7 +211,7 @@
               }).catch(() => {
                 this.$message({
                   type: 'info',
-                  message: '已取消刪除'
+                  message: '已取消删除'
                 });          
               });
           },

@@ -142,7 +142,7 @@
             this.setCid($('.bitem').eq(index).get(0).dataset.id);
           },
           setActiveStatusById(id){
-            console.log(id);
+            // console.log(id);
             $('.bitem').each(function(el){
                 $(this).removeClass('bitemActive');
                 if(this.dataset.id == id){

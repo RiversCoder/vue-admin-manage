@@ -1,9 +1,9 @@
 <template>
    <div class="con-container">
       <div class="Column">
-          <h3 class="column-title">視頻</h3>
+          <h3 class="column-title">视频</h3>
           <div class="column-content">
-                 <div v-show="videos.length==0" style="font-size:16px;color:#333;height:60px;line-height:60px;text-indent:30px;">暫無視頻資源，請添加或上傳視頻資源！</div>
+                 <div v-show="videos.length==0" style="font-size:16px;color:#333;height:60px;line-height:60px;text-indent:30px;">暂无视频资源，请添加或上传视频资源！</div>
                 <dl class="cc-item" v-for="(item,index) in videos" >
                       
                       <dt class="cc-item-previewbox">
@@ -18,8 +18,8 @@
                       <dd class="cc-item-textbox">
                           <ul class="citms">
                               <li class="cit cit1" @click="renameFile(item.dir,item.name,item.id)">重命名</li>
-                              <li class="cit cit2" @click="moveFile(item.fileType,item.id)">移動文件</li>
-                              <li class="cit cit3" @click="deleteFile(item.id)">刪除</li>
+                              <li class="cit cit2" @click="moveFile(item.fileType,item.id)">移动文件</li>
+                              <li class="cit cit3" @click="deleteFile(item.id)">删除</li>
                           </ul>
                       </dd>
 
@@ -60,7 +60,7 @@ import {mapGetters, mapMutations, mapActions} from 'vuex';
           }
         },
         methods:{
-          //格式化時間
+          //格式化时间
           formatTime(time){
 
             var m = "00";
@@ -75,39 +75,39 @@ import {mapGetters, mapMutations, mapActions} from 'vuex';
 
             return m+':'+s;
           },
-          //點擊重命名文件夾
+          //点击重命名文件夹
           renameFile(cdir,cname,cid){
-             this.$prompt('請輸入視頻名稱', 'DBS溫馨提示', {
-                confirmButtonText: '確定',
+             this.$prompt('请输入视频名称', '提示', {
+                confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 inputValue: cname
               }).then(({ value }) => {
 
-                //檢測value是否爲空
+                //检测value是否爲空
                 if(!tool.strim(value,'g')){
                    this.$message({
                       type: 'error',
-                      message: '修改名稱失敗,名稱不能爲空!'
+                      message: '修改名称失败,名称不能爲空!'
                     });
                    return;
                 }
                 
                 value = tool.strim(value,'g');
 
-                //檢測是否含有 \ /字符
+                //检测是否含有 \ /字符
                 var re = /\\\\*|\/*/g;
                 var v = value.match(re);
                 for(var i=0;i<v.length;i++){
                   if(v[i]){
                     this.$message({
                         type: 'error',
-                        message: '非法名稱格式，名稱中不能帶有正反斜杠!'
+                        message: '非法名称格式，名称中不能带有正反斜杠!'
                       });
                      return;
                   }
                 }
                 
-                //發送修改名稱請求
+                //发送修改名称请求
                 this.$axios.post(this.rename_url,{
                     fileId: cid,
                     name: value
@@ -120,7 +120,7 @@ import {mapGetters, mapMutations, mapActions} from 'vuex';
                           message: res.data.message
                         });
 
-                        //修改本地數據
+                        //修改本地数据
                         for(var i=0;i<this.source.length;i++){
                           if(this.source[i].id == cid){
                             this.source[i]['name'] = value;
@@ -138,24 +138,24 @@ import {mapGetters, mapMutations, mapActions} from 'vuex';
               }).catch(() => {
                 this.$message({
                   type: 'info',
-                  message: '取消輸入'
+                  message: '取消输入'
                 });       
               });
           },
-          //移動文件到指定文件夾
+          //移动文件到指定文件夹
           moveFile(type,id){
-              //向父級派發事件
+              //向父级派发事件
               this.$emit('movefile',{'fileType':type,'fileId':id});
           },
-          //刪除文件
+          //删除文件
           deleteFile(id){
-              this.$confirm('此操作將永久刪除該文件, 是否繼續?', '提示', {
-                confirmButtonText: '確定',
+              this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
               }).then(() => {
 
-                //請求刪除操作
+                //请求删除操作
                 this.$axios.post(this.remove_url,{
                     'fileId': id
                 }).then((res)=>{
@@ -165,7 +165,7 @@ import {mapGetters, mapMutations, mapActions} from 'vuex';
 
                          this.$message({
                           type: 'success',
-                          message: '成功刪除該視頻!'
+                          message: '成功删除该视频!'
                         });
 
                         for(var i=0;i<this.source.length;i++){
@@ -177,7 +177,7 @@ import {mapGetters, mapMutations, mapActions} from 'vuex';
                     }else{
                         this.$message({
                           type: 'danger',
-                          message: '視頻刪除失敗!'
+                          message: '视频删除失败!'
                         });
                     }
                 });
@@ -187,7 +187,7 @@ import {mapGetters, mapMutations, mapActions} from 'vuex';
               }).catch(() => {
                 this.$message({
                   type: 'info',
-                  message: '已取消刪除'
+                  message: '已取消删除'
                 });          
               });
           },

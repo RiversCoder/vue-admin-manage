@@ -54,7 +54,7 @@
                 this.setPublish(data);
                 this.setDragData([]);
                 this.setDragBoxData([]);
-
+                this.setModelId(-1);
 
                 //设置model
                 this.setEditEnable('');
@@ -67,7 +67,8 @@
                 'setPublish': 'publishData',
                 'setDragData': 'dragBoxs',
                 'setDragBoxData': 'getAllDragBoxData',
-                'setEditEnable': 'editEnable'
+                'setEditEnable': 'editEnable',
+                'setModelId': 'select_model_id',
             })
         },
         computed:{

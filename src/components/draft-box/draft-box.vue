@@ -6,8 +6,8 @@
                   <el-row>
                     <el-col :span="24">
                         <div class="grid-content grid-content-btnwrap">
-                            <el-button plain class="rbtn uploadFile" @click="goupRequest">上線</el-button>
-                            <el-button plain class="rbtn newFolder" @click="deleteRequest">刪除</el-button>
+                            <el-button plain class="rbtn uploadFile" @click="goupRequest">上线</el-button>
+                            <el-button plain class="rbtn newFolder" @click="deleteRequest">删除</el-button>
                         </div>
                     </el-col>
                 </el-row>
@@ -17,7 +17,7 @@
                 
                   <div class="scrollWrap" ref="menuScroll">
                     <el-scrollbar class="el-scrollbar-wrap">
-                          <div v-show="folderDatas.length==0" style="font-size:16px;color:#333;height:60px;line-height:60px;text-indent:30px;">暫無節目資源，請前往節目控制發布或收藏節目！</div>
+                          <div v-show="folderDatas.length==0" style="font-size:16px;color:#333;height:60px;line-height:60px;text-indent:30px;">暂无节目资源，请前往节目控制发布或收藏节目！</div>
                           <div class="cwrap">
                               <list-view :folderSources="folderDatas" :folderExist="true" :programExist="true" ></list-view>
                           </div>
@@ -92,7 +92,7 @@
             //初始化当前的节目
             initCurrentProgram(){
                if(/*!tool.sget('initOnoff')*/true){
-                     //3. 節目請求
+                     //3. 节目请求
                     this.$axios.post(this.get_current_program).then((res)=>{
                        //console.log(JSON.parse(res.data.data));
                        if(res.data.status == 'success'){
@@ -115,13 +115,13 @@
                }  
 
             },
-            //初始化草稿箱數據
+            //初始化草稿箱数据
             initProgramData(){
                 var datas = [];
                 var prefix = '';
                 this.folderDatas = [];
 
-                //清除定時器
+                //清除定时器
                 if(tool.sget('timer')){
                     clearInterval(tool.sget('timer'));
                 }
@@ -145,13 +145,13 @@
                         }
                         
                         setTimeout(()=>{
-                            //綁定刪除事件
+                            //绑定删除事件
                             this.deletePrograms();
                         },300)
                     }
                 })
             },
-            //刪除節目
+            //删除节目
             deletePrograms(){
                 var items = document.getElementsByClassName('cc-item');
                 var This = this;
@@ -198,15 +198,15 @@
                   this.pushId.push(this.deviceLists[d[i]]['pushId']);
                 }
                 
-                //遍曆要選擇的
+                //遍曆要选择的
                 var items = document.getElementsByClassName('cc-item');
 
-                //獲取要刪除的文件
+                //获取要删除的文件
                 var idArr = [];
                 for(var i=0;i<items.length;i++){
                     if(items[i].classList.contains('cactive')){
 
-                        //發出請求
+                        //发出请求
                         this.$axios.post(this.go_up_url,{
                             directorie: this.folderDatas[i].showContent,
                             pushId: JSON.stringify(this.pushId)
@@ -226,7 +226,7 @@
                     }
                 }
             },
-            //上線節目請求
+            //上线节目请求
             goupRequest(){
                 
                 var items = document.getElementsByClassName('cc-item');
@@ -235,7 +235,7 @@
                     {
                         if(i == items.length - 1){
                             this.$message({
-                              message: '請選擇要上線的節目!',
+                              message: '请选择要上线的节目!',
                               type: 'error',
                               showClose: true
                             });
@@ -248,13 +248,13 @@
                 }
 
             },
-            //發出刪除節目請求
+            //发出删除节目请求
             deleteRequest(){
 
-                //遍曆要選擇的
+                //遍曆要选择的
                 var items = document.getElementsByClassName('cc-item');
 
-                //獲取要刪除的文件
+                //获取要删除的文件
                 var idArr = [];
                 for(var i=0;i<items.length;i++){
                     if(items[i].classList.contains('cactive')){
@@ -268,7 +268,7 @@
                                   showClose: true
                                 });
 
-                               //重新加載數據！
+                               //重新加载数据！
                                this.initProgramData();
                             }
                         })
@@ -276,7 +276,7 @@
                     }else{
                         if(i == items.length-1){
                             this.$message({
-                              message: '請選擇要刪除的節目!',
+                              message: '请选择要删除的节目!',
                               type: 'error',
                               showClose: true
                             });

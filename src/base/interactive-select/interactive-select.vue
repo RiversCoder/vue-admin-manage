@@ -82,6 +82,7 @@
              sureBtnState: false,
              textareaTxt: '',
              currentType: '',
+             currentModelId: '',
              titles: [{ type:'weather' },{ type:'clock' },{ type:'text' },{ type:'model' }],
              imgs: [{src:'https://uploadfile.huiyi8.com/2014/0714/20140714111156467.jpg'},{src:'https://uploadfile.huiyi8.com/2014/0714/20140714111202491.jpg'},{src:'https://uploadfile.huiyi8.com/2014/0714/20140714111407193.jpg'},{src:'https://uploadfile.huiyi8.com/2014/0714/20140714111359894.jpg'},{src:'https://uploadfile.huiyi8.com/2014/0714/20140714111432916.jpg'},{src:'https://uploadfile.huiyi8.com/2014/0714/20140714111439411.jpg'}],
             datas:[{
@@ -127,8 +128,19 @@
            }
         },
         methods:{
-            init(){
-                console.log(this.renderData);
+            initModel(){
+
+                if(this.$route.query.stype && this.$route.query.mid){
+                    this.currentType = 'model';
+                    this.currentModelId = this.$route.query.mid;
+
+                    this.setModelId(this.currentModelId);
+                    this.setActiveClass(this.currentModelId);
+                    this.openSelectBox(this.currentType);
+                }else{
+                    this.setModelId(-1);
+                }
+
             },
             getCurrentRects(){
                 //1. 
@@ -137,6 +149,7 @@
                 //2. 获取当前的currentType
                 if(this.$route.query.stype){
                     this.currentType = this.$route.query.stype;
+
                 }
             },
             getDataByType(type){
@@ -197,11 +210,12 @@
                 //跳转到选择资源界面
                 
                 //1.检测是否已经选择位置
-                
-                if(!this.getModelId){
+                console.log(this.getModelId);
+                if(this.getModelId == -1){
                     this.$message({
                       message: '请选择模板位置！',
-                      type: 'warning'
+                      type: 'warning',
+                      showClose: true
                     });
                     return;
                 }
@@ -271,6 +285,7 @@
                     }
                 })
             },
+
             //动态计算宽高
             countXYWH(pos){
                 var bw = 1600;
@@ -325,9 +340,15 @@
 
         },
         mounted(){
-          this.init();
+          
           this.initWH();
           this.setModelId(-1);
+
+          var t = setTimeout(()=>{
+            this.initModel();
+            clearTimeout(t);
+          },500)
+
         },
         components:{
            

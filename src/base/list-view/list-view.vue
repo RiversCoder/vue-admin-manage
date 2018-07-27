@@ -4,7 +4,7 @@
          
          <!--文件夹区域-->
          <div v-if="folderExist">
-            <h3 class="column-title" v-show="showFolderTitle">文件夾</h3>
+            <h3 class="column-title" v-show="showFolderTitle">文件夹</h3>
             <div class="column-content" >
                 <dl class="cc-item" v-for="(item,index) in folderSources" :data-dir="item.dir" :data-id="item.id">
                     <!-- <dt class="cc-item-previewbox cc-item-folder-previewbox cc-i-active" v-show="!programExist">
@@ -32,7 +32,7 @@
         
         <!--视频区域-->
          <div v-if="videoExist">
-           <h3 class="column-title">視頻</h3>
+           <h3 class="column-title">视频</h3>
            <div class="column-content" >
                <dl class="cc-item" v-for="(item,index) in videoSources" :data-id="item.id">
                    <dt class="cc-item-previewbox">
@@ -50,7 +50,7 @@
 
          <!--图片区域-->
          <div v-if="imageExist">
-           <h3 class="column-title">圖片</h3>
+           <h3 class="column-title">图片</h3>
            <div class="column-content" >
                <dl class="cc-item" v-for="(item,index) in imageSources" :data-id="item.id">
                    <dt class="cc-item-previewbox">
@@ -85,7 +85,7 @@
     export default{
         data(){
             return{
-                titles: '圖片',
+                titles: '图片',
                 listType: 'image',
                 videoDatas: [],
                 recordVideo: [],

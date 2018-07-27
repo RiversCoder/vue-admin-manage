@@ -222,7 +222,6 @@
             //重新加载数据
             freshData(pdir){
               //保存当前的
-              
               this.initSources(pdir);
               this.dir = pdir;
             },

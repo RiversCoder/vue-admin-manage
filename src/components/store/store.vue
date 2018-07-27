@@ -6,15 +6,15 @@
      <div class="con-container" ref="menuScroll" >
       <div style="padding-bottom:80px;">
           <div class="Column">
-              <h3 class="column-title">賬號存儲空間</h3>
+              <h3 class="column-title">账号存储空间</h3>
               
               <div class="chartPieBox">
                   <div class="chartBoxContent">
                       <h3>Sky Team</h3>
                       <h4>深圳市龙岗区坂田大道星河WORLD</h4>
                       <p >
-                        <!-- <span class="stime">起始時間：2018.03.25</span>
-                        <span class="etime">結束時間：2018.03.25</span> -->
+                        <!-- <span class="stime">起始时间：2018.03.25</span>
+                        <span class="etime">结束时间：2018.03.25</span> -->
                       </p>
                   </div>
                   <div class="cbp_wrap">
@@ -22,21 +22,21 @@
                   </div>
               </div>
 
-              <h3 class="column-title">賬號管理</h3>
+              <h3 class="column-title">账号管理</h3>
               
               <div class="user-manage">
 
                 <div class="inputBoxs">
                   <div class="ib-item">
-                    <span class="btn-intro">創建子賬戶</span>
+                    <span class="btn-intro">创建子账户</span>
                     <el-input class="input-intro" v-model="input" placeholder="E-mail" type="email"></el-input>
                     <span class="btn-intro dbs-intro">@email.com</span>
                     <span class="dbs_psw_box">
-                      <span class="btn-intro pwd-intro" >設置密碼</span>
-                      <el-tooltip class="item" effect="dark" content="提示：密碼不能少于6位" placement="top">
+                      <span class="btn-intro pwd-intro" >设置密码</span>
+                      <el-tooltip class="item" effect="dark" content="提示：密码不能少于6位" placement="top">
                        <el-input class="input-intro" v-model="passwords" placeholder="Password" type="password" @focus="isfocus=true" @blur="isfocus=false"></el-input>
                        </el-tooltip>
-                       <span v-show="false" class="pwdInfo">密碼長度不得低于6位</span>
+                       <span v-show="false" class="pwdInfo">密码长度不得低于6位</span>
                     </span>
                   </div>
                   <div class="ib-item">
@@ -46,26 +46,26 @@
 
                <!-- <div class="inputBoxs">
                  <div class="ib-item ib-item-setting">
-                    <span class="btn-intro">設置權限</span>
+                    <span class="btn-intro">设置权限</span>
                      <div class="radioSelects">
-                          <el-radio v-model="radio" label="3">發布遊戲</el-radio>
-                          <el-radio v-model="radio" label="4">發布利率</el-radio>
+                          <el-radio v-model="radio" label="3">发布游戏</el-radio>
+                          <el-radio v-model="radio" label="4">发布利率</el-radio>
                      </div>
                   </div>
                   <div class="ib-item ib-item-create">
-                    <el-button type="danger" @click="clickAddUser" class="addcBtns">確認創建</el-button>
+                    <el-button type="danger" @click="clickAddUser" class="addcBtns">确认创建</el-button>
                   </div>
                </div> -->
 
 
                 <el-table :data="tableData" style="width: 100%;margin-top:25px;" max-height="300">
-                  <el-table-column prop="id" min-width="80" label="賬戶ID"></el-table-column>
-                  <el-table-column prop="name" min-width="120" label="用戶名"></el-table-column>
-                  <!-- <el-table-column prop="role" min-width="120" label="權限"></el-table-column> -->
-                  <el-table-column prop="updated_at" min-width="120" label="時間"></el-table-column>
+                  <el-table-column prop="id" min-width="80" label="账户ID"></el-table-column>
+                  <el-table-column prop="name" min-width="120" label="用户名"></el-table-column>
+                  <!-- <el-table-column prop="role" min-width="120" label="权限"></el-table-column> -->
+                  <el-table-column prop="updated_at" min-width="120" label="时间"></el-table-column>
                   <!-- <el-table-column prop="address" min-width="120" label="操作">
                         <template slot-scope="scope" >
-                            <el-button size="medium" type="danger" @click="handleDelete(scope.row)">刪除</el-button>
+                            <el-button size="medium" type="danger" @click="handleDelete(scope.row)">删除</el-button>
                         </template>
                   </el-table-column> -->
                 </el-table>
@@ -84,9 +84,9 @@
     
     // 引入基本模板
     let echarts = require('echarts/lib/echarts')
-    // 引入柱狀圖組件
+    // 引入柱状图组件
     require('echarts/lib/chart/pie')
-    // 引入提示框和title組件
+    // 引入提示框和title组件
     require('echarts/lib/component/tooltip')
     require('echarts/lib/component/title')
     //import BScroll from 'better-scroll';
@@ -117,7 +117,7 @@
         props: {
         },
         methods:{
-          //初始化滾動包裹盒子的高度
+          //初始化滚动包裹盒子的高度
             initScrollHeight(){
                 
                 let wrap = this.$refs.menuScroll;
@@ -132,16 +132,16 @@
                 fn();
                 window.addEventListener('resize',fn);
           },
-          //初始化獲取存儲賬戶的子賬戶
+          //初始化获取存储账户的子账户
           init(){
 
-            //驗證數據
+            //验证数据
             this.$axios.post(this.get_url).then((res)=>{
               
               if(res.data.status == 'success'){
                  this.tableData = res.data.data;
                  for(var i=0;i<res.data.data.length;i++){
-                   this.tableData[i]['role'] = res.data.data[i].role == 3 ? '發布遊戲' : '發布利率';
+                   this.tableData[i]['role'] = res.data.data[i].role == 3 ? '发布游戏' : '发布利率';
                  }
                  
               }
@@ -150,7 +150,7 @@
               //console.log(error)
             })
 
-            //初始化獲取圖片存儲的大小
+            //初始化获取图片存储的大小
             this.$axios.post(this.get_pv_url).then((res)=>{
               
               if(res.data.status == 'success'){
@@ -177,15 +177,15 @@
 
             return result
           },
-          //點及添加子賬戶
+          //点及添加子账户
           clickAddUser(){
             if(!this.input || !this.passwords){
-              this.$message.error('郵箱或密碼不能爲空!');
+              this.$message.error('邮箱或密码不能爲空!');
 
             }else{
 
               if(!/^\w+$/.test(this.input)){
-                this.$message.error('郵箱或格式錯誤!');
+                this.$message.error('邮箱或格式错误!');
                 return;
               }
 
@@ -199,7 +199,7 @@
                 if(res.data.status == 'success'){
                   this.init();
                   this.$message({
-                    message: '恭喜你，成功添加子賬戶！',
+                    message: '恭喜你，成功添加子账户！',
                     type: 'success'
                   });
                 }
@@ -223,9 +223,9 @@
             items[index].classList.toggle('cactive');
           },
           drawPie(){
-                // 基于准備好的dom，初始化echarts實例
+                // 基于淮备好的dom，初始化echarts实例
                 let myChart = echarts.init(document.getElementById('chartBoxPie'))
-                // 繪制圖表
+                // 绘制图表
                 let option = {
                     tooltip: {
                         trigger: 'item',
@@ -234,11 +234,11 @@
                     legend: {
                         orient: 'vertical',
                         x: 'left',
-                        data:['空閑 (GB)','VIDEO (GB)','圖片 (GB)']
+                        data:['空闲 (GB)','VIDEO (GB)','图片 (GB)']
                     },
                     series: [
                         {
-                            name:'存儲空間',
+                            name:'存储空间',
                             type:'pie',
                             radius: ['50%', '70%'],
                             avoidLabelOverlap: false,
@@ -262,19 +262,19 @@
                             },
                             data:[
                                 {value:this.videoSize, name:'VIDEO (GB)',itemStyle: {color: '#5ED07F'}},
-                                {value:this.imageSize, name:'圖片 (GB)',itemStyle: {color: '#F6CF5F'}},
-                                {value:this.freeSize, name:'空閑 (GB)',itemStyle: {color: '#CCCCCC'}}
+                                {value:this.imageSize, name:'图片 (GB)',itemStyle: {color: '#F6CF5F'}},
+                                {value:this.freeSize, name:'空闲 (GB)',itemStyle: {color: '#CCCCCC'}}
                             ]
                         }
                     ]
                 };
                 myChart.setOption(option);
             },
-            //點擊刪除子賬戶
+            //点击删除子账户
             handleDelete(data){
 
-                this.$confirm('此操作將刪除該子賬號, 是否繼續?', 'DBS溫馨提示', {
-                  confirmButtonText: '確定',
+                this.$confirm('此操作将删除该子账号, 是否继续?', 'DBS温馨提示', {
+                  confirmButtonText: '确定',
                   cancelButtonText: '取消',
                   type: 'warning'
                 }).then(() => {
@@ -283,7 +283,7 @@
                       if(res.data.status == 'success'){
                         this.init();
                         this.$message({
-                          message: '成功刪除該子賬戶！',
+                          message: '成功删除该子账户！',
                           type: 'success'
                         });
                       }else{
@@ -293,7 +293,7 @@
                 }).catch(() => {
                   this.$message({
                     type: 'info',
-                    message: '已取消刪除'
+                    message: '已取消删除'
                   });          
                 });
             }

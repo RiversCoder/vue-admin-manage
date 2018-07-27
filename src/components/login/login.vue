@@ -8,13 +8,13 @@
               <div class="formBox">
                   <form method="get" action="">
                     
-                    <h3 class="loginTitle"> 登陸 </h3>
+                    <h3 class="loginTitle"> 登录 </h3>
                     
                     <el-input v-model="email" placeholder="Email" type="email" class="inputs" name="user_name"></el-input>  
-                    <el-input v-model="password" placeholder="Password" type="password" class="inputs" name="user_password"></el-input> 
+                    <el-input v-model="password" placeholder="Password" type="password" class="inputs" name="user_password" id="loginUbmit"></el-input> 
                     <el-input  @click.native="loginfn" value="Login" type="button" class="inputs submit" ></el-input> 
                     
-                    <!-- <a class="forgetInfo" href="javascript:;" @click="forgetpw">忘記密碼?</a> -->
+                    <!-- <a class="forgetInfo" href="javascript:;" @click="forgetpw">忘记密码?</a> -->
 
                   </form>
               </div>
@@ -43,7 +43,7 @@
         //初始化当前的节目
           initCurrentProgram(){
              if(!tool.sget('initOnoff')){
-                   //3. 節目請求
+                   //3. 节目请求
                   this.$axios.post(this.get_current_program).then((res)=>{
 
                      if(res.data.status == 'success'){
@@ -83,25 +83,34 @@
           
           
           if(res.status == 'success'){
-            //寫入vuex狀態樹中
+            //写入vuex状态树中
             this.setToken(res.data[0].token);
             //把节目写入本地数据
             //this.initCurrentProgram();
-            //去到首頁
+            //去到首页
             this.$router.push({'path':'/home'})
 
           }else{
-            //彈出提示信息 登陸失敗
+            //弹出提示信息 登陆失败
             this.$message.error(res.message);
           }
         },
+        initEnterEvent(){
+          var This = this;
+          $('#loginUbmit').keydown(function(e){
+            if(e.keyCode == 13){
+              This.loginfn();
+            }
+          }); 
+
+        },  
         forgetpw(){
           this.$router.push({'path':'/reset'})
         },
         ...mapMutations({
             setToken: 'login'  
         }),
-        //初始化滾動包裹盒子的高度
+        //初始化滚动包裹盒子的高度
         initScrollHeight(){
             
               let wrap = this.$refs.menuScroll;
@@ -118,6 +127,7 @@
       },
       mounted(){
         this.initScrollHeight();
+        this.initEnterEvent();
       }
     }
 

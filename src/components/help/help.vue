@@ -8,7 +8,7 @@
 
         <div class="areaBox" ref="areaBox">
             <a class="logoSite" href="http://www.skylandertech.com" target="_blank">www.skylandertech.com</a>
-            <p class="ab-area">深圳市龍崗區五和大道星河WORLD-A 1303A</p>
+            <p class="ab-area">深圳市龙岗区五和大道星河WORLD-A 1303A</p>
         </div>
     </div>
 </template>

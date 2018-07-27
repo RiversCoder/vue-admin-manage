@@ -1,0 +1,32 @@
+@import "~common/stylus/variable" 
+@import "~common/stylus/mixin"
+
+.svg-transform-wrapper
+  wh(100%,200px);bgColor(#eee);@extend .rp;display:flex;flex-wrap: wrap;
+  
+  .sbox-item
+    wh(300px,auto);bgColor(yellow);@extend .rp;box-sizing:border-box;overflow:hidden;margin-left:10px;
+    .sbox
+      wh(100%,0);padding-top:66%;@extend .rp;
+      .sbox-svg
+        ab(0,0);wh(100%,100%);
+      
+        .motion-box
+          wh(100%,100%);
+          .chess-box
+            wh(100%,100%);@extend .rp;
+            .cb-row-box
+              abs();left:0;display:flex;flex-wrap: nowrap
+            .cb-box
+              box-sizing:border-box;border:1px solid #ddd;    
+
+  .sbox-item-active
+    border:2px solid red;
+    
+
+      
+  
+        
+
+
+

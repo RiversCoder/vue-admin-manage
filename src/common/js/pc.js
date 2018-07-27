@@ -446,7 +446,7 @@ export default {
               imgUrl = r[j].files[m].img;
               imgUrlOnOff = false;
             }
-            files.push({ "file_id":r[j].files[m].id, "file_type":r[j].files[m].file_type, "file_duration":r[j].files[m].file_duration, "file_size":r[j].files[m].file_size, "times":"0", "playType":"1", "url":'/'+r[j].files[m].download_url.split('/')[r[j].files[m].download_url.split('/').length-1] });
+            files.push({ "file_id":r[j].files[m].id, "file_type":r[j].files[m].file_type, "file_duration":r[j].files[m].file_duration, "file_size":r[j].files[m].file_size, "times":r[j].files[m].times, "playType":r[j].files[m].playType, "url":'/'+r[j].files[m].download_url.split('/')[r[j].files[m].download_url.split('/').length-1] });
           }
           f.files = files;
           a.push(f);
@@ -552,5 +552,15 @@ export default {
       }
 
       return timelists;
+    },
+    //添加转场效果相关字段
+    addEffectPage(sources){
+      var sources = this.copy(sources);
+
+      for(var i=0;i<sources.length;i++){
+        sources[i] = this.copy({...sources[i],times:0,playType:1});
+      }
+
+      return sources;
     }
 }

@@ -236,7 +236,7 @@
           .tbItem
             wh(100%,0);padding-top:65%;box-sizing:border-box;border-bottom:1px solid #ddd;@extend .rp;
             .listSvgBoxSelect
-              wh(75%,60%);border:1px solid red;ab(50%,50%);transform:translate3d(-50%,-50%,0);bgColor(rgba(231,231,231,1));
+              wh(75%,60%);border:1px solid rgba(0,0,0,0);ab(50%,50%);transform:translate3d(-50%,-50%,0);bgColor(rgba(231,231,231,1));
               .rectBox
                 stroke-width:1px;stroke:#c9c9c9;fill:none;
           .tbItemActive
