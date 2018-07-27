@@ -23,7 +23,10 @@
           
           <!-- 棋盘动画 -->
           <Chess @getTimer="getTimer"></Chess>
-          
+
+          <!-- 棋盘动画 -->
+          <Diss @getTimer="getTimer"></Diss>
+
       </div>
 
 </template>
@@ -51,6 +54,8 @@
     import Cover from './6.cover.vue'
     //7. 棋盘动画
     import Chess from './7.chess.vue'
+    //8. 溶解动画
+    import Diss from './8.diss.vue'
 
     export default{
         data(){
@@ -80,7 +85,8 @@
           SZ,
           Fenge,
           Cover,
-          Chess
+          Chess,
+          Diss
         }
     }
 </script>

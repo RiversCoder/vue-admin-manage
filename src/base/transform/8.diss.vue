@@ -2,10 +2,10 @@
       
           
           <!-- 棋盘动画 -->
-          <div class="sbox-item sbox-item-7">
+          <div class="sbox-item sbox-item-8">
 
              <!--  棋盘展开 --> 
-             <div class="sbox sbox-7">
+             <div class="sbox sbox-8">
                 <div class="sbox-svg">
 
                   <!-- 动效部分 -->
