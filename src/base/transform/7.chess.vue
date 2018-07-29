@@ -10,7 +10,7 @@
 
                   <!-- 动效部分 -->
                   <div class="motion-box">
-                     <img :src="cimg" class="mbox-img">
+                     <img :src="imgSrc" class="mbox-img">
                      <div class="chess-box" id="chess-box">
                        
                      </div>
@@ -34,7 +34,7 @@
               imgSrc: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532604386990&di=614d672cf7c656d938dd4a37f141a362&imgtype=jpg&src=http%3A%2F%2Fimg4.imgtn.bdimg.com%2Fit%2Fu%3D2275076119%2C299053444%26fm%3D214%26gp%3D0.jpg',
               cimg: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532627805987&di=e59ac1eb42e3d050c81cdf77465eda6d&imgtype=0&src=http%3A%2F%2Fpic35.photophoto.cn%2F20150629%2F0036036319421772_b.jpg',
               timer: null,
-              tiimg:'http://hiphotos.baidu.com/image/w=730;crop=0,0,730,405/sign=b7582befd9a20cf44690fcdc46322844/cf1b9d16fdfaaf511d042dd7855494eef11f7af7.jpg'
+              tiimg:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532844894449&di=2a046505cf28d75564baa61a9adc7d52&imgtype=0&src=http%3A%2F%2Fold.bz55.com%2Fuploads%2Fallimg%2F150422%2F139-1504221GZ3.jpg'
             }
         },
         props: {
@@ -89,9 +89,6 @@
                 'background-image': "url("+This.tiimg+")"
               });
             });
-            //img.attr('xlink:href',this.cimg);
-            // elem1.get(0).setAttribute('transform', 'translate('+150+','+100+')');
-            // elem2.get(0).setAttribute('transform', 'translate('+150+','+100+')');
             wrapper.addClass('sbox-item-active');
             cancelAnimationFrame(This.timer);
 
@@ -123,9 +120,11 @@
               }
 
               if(w2 > rw){
-                w2 = rw;
-                cancelAnimationFrame(This.timer);
-                return;
+                count = 0;
+                w2 = 0;
+                w1 = 0;
+                //cancelAnimationFrame(This.timer);
+                //return;
               }
               
             }

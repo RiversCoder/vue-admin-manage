@@ -8,33 +8,33 @@
              <div class="sbox sbox-1">
                 <div class="sbox-svg">
                  <!-- 动效部分 -->
-                  <div class="motion-box">
+                                      <div class="motion-box">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width='100%' height='100%' viewBox='0 0 300 200' class="svgBox">
-   
+
                       <!-- 定义外部遮罩 -->
                       <clipPath id="clipPathDefinition" clipPathUnits="userSpaceOnUse" >
                        <rect x='0' y='0' width='300' height='200'/>
                       </clipPath>
-                      
+
                       <!-- 定义扇形运动路径 -->
                       <defs>
                        <path d="" stroke="#000" class="motionPath" transform="translate(150,100)" id="ring"></path>
                       </defs>
-                      
+
                       <!-- 定义遮罩 -->
                       <clipPath id="1_SVGID_2_">
                        <use xlink:href="#ring"  style="overflow:visible;"/>
                       </clipPath>
 
                       <!-- 背景图片 -->
-                      <image xlink:href="http://img05.tooopen.com/images/20150521/tooopen_sy_125610923736.jpg" x="0" y="0" height="100%" width="100%" preserveAspectRatio="xMidYMid slice"/>  
-                      
+                      <image :xlink:href="imgSrc" x="0" y="0" height="100%" width="100%" preserveAspectRatio="xMidYMid slice"/>  
+
                       <!-- 要绘制的扇形 -->
                       <g clip-path="url(#1_SVGID_2_)">
                         <image xlink:href="" x="-150" y="-100" width="600" height="400" preserveAspectRatio="xMaxYMax meet" class="cp-img" />
                       </g>
 
-                     </svg>
+                    </svg>
                   </div><!-- //end motion-box -->
                 </div><!-- //end sbox-svg -->
              </div><!-- //end sbox-1 -->
@@ -53,8 +53,8 @@
     export default{
         data(){
             return{
-              imgSrc: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532604386990&di=614d672cf7c656d938dd4a37f141a362&imgtype=jpg&src=http%3A%2F%2Fimg4.imgtn.bdimg.com%2Fit%2Fu%3D2275076119%2C299053444%26fm%3D214%26gp%3D0.jpg',
-              cimg: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532627805987&di=e59ac1eb42e3d050c81cdf77465eda6d&imgtype=0&src=http%3A%2F%2Fpic35.photophoto.cn%2F20150629%2F0036036319421772_b.jpg',
+              cimg: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532856632101&di=c5a6f0e0478058d1f8dacb49bffafd5a&imgtype=0&src=http%3A%2F%2Fwww.ooqiu.com%2Fuploads%2Fallimg%2F150304%2F23-150304115Q30-L.jpg',
+              imgSrc: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532856563026&di=aafb7fb5bc2f992886e84b82bda552c9&imgtype=0&src=http%3A%2F%2Fimg04.tooopen.com%2Fimages%2F20121009%2Ftooopen_201210091413323721.jpg',
               timer: null
             }
         },
@@ -88,7 +88,7 @@
               function fn(){
                 This.timer = requestAnimationFrame(fn);
                 This.$emit('getTimer',This.timer);
-                degrees+=1;
+                degrees+=1.5;
                 rad = degrees * (Math.PI / 180);
                 if(degrees > 360){
                   degrees = 0;
