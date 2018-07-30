@@ -24,10 +24,10 @@
         </div>
 
 
-        <el-dialog title="選擇播放時段" :visible.sync="dialogFormVisible">
+        <el-dialog title="选择播放时段" :visible.sync="dialogFormVisible">
           
-          <el-time-select v-model="value1" :picker-options="{ start: '00:00', step: '00:10', end: '24:00' }" placeholder="請選擇時間"></el-time-select>
-          <el-time-select v-model="value2" :picker-options="{ start: '00:00', step: '00:10', end: '24:00' }" placeholder="請選擇時間"></el-time-select>
+          <el-time-select v-model="value1" :picker-options="{ start: '00:00', step: '00:10', end: '24:00' }" placeholder="请选择时间" :editable="false"></el-time-select>
+          <el-time-select v-model="value2" :picker-options="{ start: '00:00', step: '00:10', end: '24:00' }" placeholder="请选择时间" :editable="false"></el-time-select>
 
           <div class="checkboxs"> 
               <el-checkbox-group v-model="checkList">
@@ -43,7 +43,7 @@
         
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="closeSure">確 定</el-button>
+            <el-button type="primary" @click="closeSure">确 定</el-button>
           </div>
 
         </el-dialog>

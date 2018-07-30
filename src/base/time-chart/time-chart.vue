@@ -2,13 +2,13 @@
     <div>
         <div class="previewWrap">        
           <div class="pc-previewWrap">
-              <h3 class="column-title column-title-2" >節目總預覽</h3> 
+              <h3 class="column-title column-title-2" >节目总预览</h3> 
               <div class="previewBoxWrap" >
                   <div class="previewBox" >
                       <div class="pbox tubiaobox">
                           
                           <!-- 說明 -->
-                          <ul class="introLists" v-show='false'>
+                          <ul class="introLists" v-if='false'>
                               <li class="introItem introItem1">工作</li>
                               <li class="introItem introItem2">非工作時間</li>
                               <li class="introItem introItem3">非工作時間</li>
@@ -24,7 +24,7 @@
                           <div class="collectionBtn">
                               <el-button plain class="rbtn resetBtn" @click.native="resetData">重置</el-button>
                               <el-button plain class="rbtn colectBtn" @click.native="collectData">收藏</el-button>
-                              <el-button plain class="rbtn uploadFile" @click.native="publishData">上線</el-button>
+                              <el-button plain class="rbtn uploadFile" @click.native="publishData">上线</el-button>
                           </div>    
                           
                       </div>

@@ -41,7 +41,6 @@
     import pc from 'common/js/pc.js'
     import './transform.styl'
 
-
     //0.无动画
     import Wu from './0.none.vue'
     //1.时钟动画

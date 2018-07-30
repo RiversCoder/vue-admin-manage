@@ -446,7 +446,7 @@ export default {
               imgUrl = r[j].files[m].img;
               imgUrlOnOff = false;
             }
-            files.push({ "file_id":r[j].files[m].id, "file_type":r[j].files[m].file_type, "file_duration":r[j].files[m].file_duration, "file_size":r[j].files[m].file_size, "times":r[j].files[m].times, "playType":r[j].files[m].playType, "url":'/'+r[j].files[m].download_url.split('/')[r[j].files[m].download_url.split('/').length-1] });
+            files.push({ "file_id":r[j].files[m].id, "file_type":r[j].files[m].file_type, "file_duration":r[j].files[m].file_duration, "file_size":r[j].files[m].file_size, "times":r[j].files[m].times, "playType":r[j].files[m].playType, "url":this.getDownUrl(r[j].files[m].download_url) });
           }
           f.files = files;
           a.push(f);
@@ -461,6 +461,26 @@ export default {
       formatData.content = this.copy(content);
 
       return formatData;
+    },
+    //格式化要上传的文件url
+    getDownUrl(url){
+      var str = '';
+
+      var needUrl1 = url.split('//')[1];
+      var needUrlArr = needUrl1.split('/');
+
+      for(var i=0;i<needUrlArr.length;i++){
+        if(needUrlArr[i] == 'user-dir'){
+          str = '/user-dir/'+needUrlArr[needUrlArr.length-1];
+          break;
+        }else{
+          if(i == needUrlArr.length-1){
+            str = '/'+needUrlArr[needUrlArr.length-1];
+          }
+        }
+      }
+
+      return str;
     },
     //百分数转成小数
     ptp(str,len){

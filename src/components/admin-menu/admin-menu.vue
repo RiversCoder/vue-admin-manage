@@ -112,7 +112,12 @@
                           <span class="mtext">存储与账号</span>
                       </router-link>
                   </li>
-                  
+                  <li class="mitem mitem6">
+                    <router-link to="/device-manage">
+                        <span class="micon"></span>
+                        <span class="mtext">设备管理</span>
+                    </router-link>
+                </li>
                   <li class="mitem mitem7">
                       <router-link to="/help">
                           <span class="micon"></span>

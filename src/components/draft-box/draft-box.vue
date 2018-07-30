@@ -220,6 +220,8 @@
                                 });
 
                                this.initCurrentProgram();
+
+
                             }
                         })
                         break;
@@ -258,20 +260,40 @@
                 var idArr = [];
                 for(var i=0;i<items.length;i++){
                     if(items[i].classList.contains('cactive')){
-                        this.$axios.post(this.delete_drap_box_url,{
-                            'showId': items[i].dataset.id
-                        }).then((res)=>{
-                            if(res.data.status == "success"){
-                               this.$message({
-                                  message: res.data.message,
-                                  type: 'success',
-                                  showClose: true
-                                });
 
-                               //重新加载数据！
-                               this.initProgramData();
-                            }
-                        })
+                        //判断是否要删除
+                        this.$confirm('是否继续删除该节目？', '提示', {
+                          confirmButtonText: '确定',
+                          cancelButtonText: '取消',
+                          type: 'warning'
+                        }).then(() => {
+
+                            this.$axios.post(this.delete_drap_box_url,{
+                                'showId': items[i].dataset.id
+                            }).then((res)=>{
+                                if(res.data.status == "success"){
+                                   this.$message({
+                                      message: res.data.message,
+                                      type: 'success',
+                                      showClose: true
+                                    });
+                                   $('.v-modal-leave').css('display','none');
+                                   //重新加载数据！
+                                   this.initProgramData();
+
+                                   setTimeout(()=>{
+                                        //绑定删除事件
+                                        this.deletePrograms();
+                                   },300)
+                                }
+                            })  
+
+                        }).catch(() => {
+                          this.$message({
+                            type: 'info',
+                            message: '已取消删除'
+                          });          
+                        });
                         break;
                     }else{
                         if(i == items.length-1){
