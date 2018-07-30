@@ -11,7 +11,8 @@
                        </span>
                        <span :class="item.file_type == '1' ? 'vcip-icon' : 'vcip-icon icip-icon' "></span>
                        <span class="vcip-name">{{item.file_name.length<12?item.file_name:item.file_name.substr(0,12)+'...'}}</span>
-                       <span class="vcip-effect">转场效果：{{item.playType}}</span>
+                       <span class="vcip-effect">转场效果：{{transformName[item.playType]}}</span>
+
                  </dt>
                  <span class="maskImg"></span>
                  <span class="maskImgActive"></span>
@@ -51,7 +52,10 @@
         data(){
             return{
                isExist: true,
-               sourcess:[{"file_name":"video12","file_type":1,"download_url":"https://skylander-dbs.oss-cn-hongkong.aliyuncs.com/zj0whcrh0a7d.mp4","file_duration":65,"file_size":4524494,"id":6,"img":"https://skylander-dbs.oss-cn-hongkong.aliyuncs.com/zj0whcrh0a7d.mp4?x-oss-process=video/snapshot,t_3000,f_jpg,w_800,h_600,m_fast"},{"file_name":"SPARKSmini-series–Episode1-Onceuponatime","file_type":1,"download_url":"https://skylander-dbs.oss-cn-hongkong.aliyuncs.com/4hxeyhuskwif.mp4","file_duration":326,"file_size":46722920,"id":7,"img":"https://skylander-dbs.oss-cn-hongkong.aliyuncs.com/4hxeyhuskwif.mp4?x-oss-process=video/snapshot,t_3000,f_jpg,w_800,h_600,m_fast"},{"file_name":"002","file_type":1,"download_url":"https://skylander-dbs.oss-cn-hongkong.aliyuncs.com/gwedr646njm5.mp4","file_duration":644,"file_size":127667051,"id":12,"img":"https://skylander-dbs.oss-cn-hongkong.aliyuncs.com/gwedr646njm5.mp4?x-oss-process=video/snapshot,t_3000,f_jpg,w_800,h_600,m_fast"},{"file_name":"005","file_type":1,"download_url":"https://skylander-dbs.oss-cn-hongkong.aliyuncs.com/4tqxlnbh1814.mp4","file_duration":760,"file_size":100873468,"id":13,"img":"https://skylander-dbs.oss-cn-hongkong.aliyuncs.com/4tqxlnbh1814.mp4?x-oss-process=video/snapshot,t_3000,f_jpg,w_800,h_600,m_fast"}]
+               transformID: ['m0','m1','m2','m3','m4','m5','m6','m7','m8'],
+               transformName: ['无','十字扩展','百叶窗','扇形展开','溶解','覆盖','时钟','棋盘','分割'],
+               sourcess:[],
+               playType: 0
             }
         },
         props: {
@@ -63,12 +67,29 @@
           }
         },
         methods:{
+          getTranNamebyId(id){
+            var index =  0;
+            for(var i=0;i<this.transformID.length;i++){
+              if(this.transformID[i] == id){
+                index = i;
+                break;
+              }
+            }
+            this.playType = index;
+            return this.transformName[index];
+          },
           ...mapMutations({
             setSelect:'select'
           })
         },
         computed:{
-          ...mapGetters(['results'])
+          ...mapGetters({
+            'results':'results',
+            'getMaskId': 'maskid'
+          })
+        },
+        watch:{
+
         },
         mounted(){
           //console.log(this.sources);
@@ -109,7 +130,7 @@
                     img
                       wh(100%,100%);border-radius:10px;
                 .vcip-effect
-                    font-size:12px;abs();right:10px;top:8px;color:#fff;                    
+                    font-size:12px;abs();left:10px;top:8px;color:#fff;                    
                 
                 /* 图片 */
                   

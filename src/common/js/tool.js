@@ -1074,7 +1074,87 @@ var tool = {
                 }
             }
         }
-    }   
+    },
+    // 通过素材id 获取图片 
+    new_getPreviewImgById(arr,id){
+        for(var i=0;i<arr.length;i++){
+            if(arr[i].id == id){
+                return arr[i].img;
+            }
+        }
+    },
+    //通过ID来确定切重新排列素材
+    new_arrangeDataById(data,cid,lastid){
+        var data = JSON.parse(JSON.stringify(data));
+        var cindex = 0;
+        var cdata = {};
+        var lastIndex = 0;
+        var lastdata = {};
+
+        for(var i=0;i<data.length;i++){
+            if(data[i].id == cid){
+                cindex = i;
+                cdata = {...data[i]};
+                continue;
+            }
+            if(data[i].id == lastid){
+                lastIndex = i;
+                lastdata = {...data[i]};
+                continue;
+            }
+        }
+
+        if(cindex>lastIndex){
+            data.splice(lastIndex,0,cdata);
+            data.splice(cindex+1,1);
+        }else{
+            data.splice(lastIndex+1,0,cdata);
+            data.splice(cindex,1);
+        }
+
+        return data;
+    },
+    new_arrangeChildren(children,ci,di){
+        var cid = ci.dataset.id;
+        var tid = di.dataset.id;
+
+        var cindex = 0;
+        var tindex = 0;
+
+        var arr = [];
+        var narr = [];
+
+        for(var i=0;i<children.length;i++){
+            arr.push(children[i]);
+            ///narr.push(children[i]);
+            if(children[i].dataset.id == cid){
+                cindex = i;
+                continue;
+            }else if(children[i].dataset.id == tid){
+                tindex = i;
+                continue;
+            }
+        }
+
+
+        for(var i=0;i<arr.length;i++){
+            if(i == tindex){
+                arr[i] = children[cindex];
+            }
+        }
+
+        if(cindex > tindex){
+            delete(arr[cindex]);
+            arr.splice(tindex,0,children[cindex]);
+        }else{
+            arr.splice(tindex,0,children[cindex]);
+            delete(arr[cindex]);
+        }
+
+        //console.log(arr);
+        return arr;
+        console.log(children);
+    }
 };
 
 export default tool;

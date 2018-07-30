@@ -2,7 +2,7 @@
       
           
           <!-- 扇形动画 -->
-          <div class="sbox-item sbox-item-2">
+          <div class="sbox-item sbox-item-2" data-type='2'>
 
              <!--  扇形展开 --> 
              <div class="sbox sbox-2">
@@ -42,7 +42,7 @@
                               <use xlink:href="#2_SVGID_5_"  style="overflow:visible;"/>
                             </clipPath>
                             <g transform="matrix(1 0 0 1 -3.814697e-06 0)" style="clip-path:url(#2_SVGID_6_);">
-                                <image style="overflow:visible;" width="1920" height="1080" :xlink:href="cimg"  transform="matrix(0.1958 0 0 0.2176 -53 -11)"></image>
+                                <image style="overflow:visible;" width="300" height="200" :xlink:href="imgSrc"  preserveAspectRatio="xMidYMid slice"></image>
                             </g>
                           </g>
                         </g>
@@ -64,7 +64,7 @@
                             </clipPath>
                             <g transform="matrix(1 0 0 1 -3.814697e-06 0)" style="clip-path:url(#2_SVGID_10_);">
                               
-                                <image style="overflow:visible;" width="1920" height="1080" :xlink:href="cimg"  transform="matrix(0.1958 0 0 0.223 -53 -12.275)">
+                                <image style="overflow:visible;" width="300" height="200" :xlink:href="imgSrc"  preserveAspectRatio="xMidYMid slice">
                               </image>
                             </g>
                           </g>
@@ -87,7 +87,7 @@
                             </clipPath>
                             <g transform="matrix(1 0 0 1 -3.814697e-06 0)" style="clip-path:url(#2_SVGID_14_);">
                               
-                                <image style="overflow:visible;" width="1920" height="1080" :xlink:href="cimg"  transform="matrix(0.1958 0 0 0.2176 -53 -10)">
+                                <image style="overflow:visible;" width="300" height="200" :xlink:href="imgSrc" preserveAspectRatio="xMidYMid slice" >
                               </image>
                             </g>
                           </g>
@@ -109,7 +109,7 @@
                               <use xlink:href="#2_SVGID_17_"  style="overflow:visible;"/>
                             </clipPath>
                             <g transform="matrix(1 0 0 1 -3.814697e-06 0)" style="clip-path:url(#2_SVGID_18_);">
-                              <image style="overflow:visible;" width="1920" height="1080" :xlink:href="cimg"  transform="matrix(0.1958 0 0 0.2176 -53 -11)">
+                              <image style="overflow:visible;" width="300" height="200" :xlink:href="imgSrc"  preserveAspectRatio="xMidYMid slice">
                               </image>
                             </g>
                           </g>
@@ -132,7 +132,7 @@
                             </clipPath>
                             <g transform="matrix(1 0 0 1 -3.814697e-06 0)" style="clip-path:url(#2_SVGID_22_);">
                               
-                                <image style="overflow:visible;" width="1920" height="1080" :xlink:href="cimg"  transform="matrix(0.1958 0 0 0.2176 -53 -11)">
+                                <image style="overflow:visible;" width="300" height="200" :xlink:href="imgSrc" preserveAspectRatio="xMidYMid slice" >
                               </image>
                             </g>
                           </g>
@@ -141,8 +141,12 @@
                       </svg>
                   </div><!-- //end motion-box -->
                 </div><!-- //end sbox-svg -->
+
+                <!-- 转场说明 -->  
+                <div class="effect-intro">{{title}}</div>   
              </div><!-- //end sbox-2 -->
-               
+            
+             
           </div>
 
 
@@ -152,12 +156,14 @@
 
 
 <script scoped>
+    
+    import { mapGetters, mapMutations } from 'vuex';
 
     export default{
         data(){
             return{
-              imgSrc: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532604386990&di=614d672cf7c656d938dd4a37f141a362&imgtype=jpg&src=http%3A%2F%2Fimg4.imgtn.bdimg.com%2Fit%2Fu%3D2275076119%2C299053444%26fm%3D214%26gp%3D0.jpg',
-              cimg: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532858473691&di=582078f5400dd60b7de7a989956594c5&imgtype=0&src=http%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201409%2F27%2F20140927130553_r342t.jpeg',
+              id: 'm2',
+              title: '百叶窗',
               timer: null
             }
         },
@@ -165,6 +171,14 @@
           timers:{
             type: Object,
             default: null
+          },
+          cimg:{
+            type: String,
+            default: require('@/common/images/term_back_sel.png')
+          },
+          imgSrc:{
+            type: String,
+            default: require('@/common/images/term_back_sel1.png')
           }
         },
         methods:{
@@ -173,14 +187,14 @@
 
             //2. 百叶窗
             $('.sbox-item-2').click(function(){
-              console.log('motion 2');
+              This.setMaskId(This.id);
               This.motion($(this),$(this).find('.svgRect'),$(this).find('.cp-img'));
             }); 
             
           },
           motion(wrapper,elem,img){
            var This = this,h = 40;
-           img.attr('xlink:href',this.imgSrc);
+           img.attr('xlink:href',this.cimg);
            wrapper.addClass('sbox-item-active');
            cancelAnimationFrame(this.timer);
            
@@ -202,10 +216,29 @@
             }
 
            }
-          }
+          },
+          cancelStatus(){
+            cancelAnimationFrame(this.timer);
+            $('.sbox-item-2').removeClass('sbox-item-active');
+            $('.sbox-item-2').find('.svgRect').each(function(index,ele){
+              ele.setAttribute('height',40);
+            });
+          },
+          ...mapMutations({
+            setMaskId: 'maskid'
+          })
         },
         computed:{
-          
+          ...mapGetters({
+            getMaskId: 'maskid'
+          })
+        },
+        watch:{
+          getMaskId(nv,ov){
+            if(nv !== this.id){
+              this.cancelStatus();
+            }
+          }
         },
         mounted(){
           this.initEvent();

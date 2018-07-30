@@ -558,9 +558,23 @@ export default {
       var sources = this.copy(sources);
 
       for(var i=0;i<sources.length;i++){
-        sources[i] = this.copy({...sources[i],times:0,playType:1});
+        sources[i] = this.copy({...sources[i],times:0,playType:0});
       }
 
       return sources;
+    },
+    //更改当前拖拽的专场的数据
+    getNewSourceDataById(data,id,type){
+      var data = this.copy(data);
+
+      for(var i=0;i<data.length;i++){
+        if(data[i].id == id){
+          data[i].playType = type;
+          break;
+        }
+      }
+
+      return data;
+
     }
 }

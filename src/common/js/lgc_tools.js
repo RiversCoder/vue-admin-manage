@@ -84,6 +84,9 @@ var tools =
 
 			var lastIndex = 0;
 
+			var lastId = 0;
+			var cid = obj.dataset.id;
+
 			document.onmousemove = function(ev)
 			{	
 				var ev = ev || window.event;
@@ -136,6 +139,7 @@ var tools =
 				This.checkCrash(clone,arr,function(arr,i){
 					This.setCrashElemStyle(arr,i);
 					lastIndex = i;
+					lastId = arr[lastIndex].dataset.id;
 				});
 				
 				//给当前位置赋值
@@ -167,7 +171,7 @@ var tools =
 					//清除样式
 					This.setCrashElemStyle(arr);
 					//鼠标松开后操作
-					fn&&fn(obj.index,lastIndex);
+					fn&&fn(obj.index,lastIndex,cid,lastId);
 				}
 				
 				
@@ -211,7 +215,8 @@ var tools =
 			var checkDisY = 0;
 
 			var lastIndex = 0;
-
+			var lastId = 0;
+			var cid = obj.dataset.id;
 
 			document.ontouchmove = function(e)
 			{
@@ -246,6 +251,7 @@ var tools =
 				This.checkCrash(clone,arr,function(arr,i){
 					This.setCrashElemStyle(arr,i);
 					lastIndex = i;
+					lastId = arr[lastindex].dataset.id;
 				});
 
 				document.ontouchend = function(e){
@@ -254,7 +260,7 @@ var tools =
 						//清除样式
 						This.setCrashElemStyle(arr);
 						//鼠标松开后操作
-						fn&&fn(obj.index,lastIndex);
+						fn&&fn(obj.index,lastIndex,cid,lastId);
 					}
 					
 

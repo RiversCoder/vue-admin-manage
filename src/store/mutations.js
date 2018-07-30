@@ -65,6 +65,9 @@ const mutations = {
     },
     [types.SET_PUBLISH_DATA]: (state,arr) =>{
         state.publishData = arr;
+    },
+    [types.SET_MASK_ID]: (state,id)=>{
+        state.maskid = id;
     }
 };
 

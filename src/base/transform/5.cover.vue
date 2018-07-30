@@ -2,7 +2,7 @@
       
           
           <!-- 覆盖动画 -->
-          <div class="sbox-item sbox-item-6">
+          <div class="sbox-item sbox-item-6" data-type="5">
 
              <!--  覆盖展开 --> 
              <div class="sbox sbox-6">
@@ -23,17 +23,19 @@
                       </clipPath>
 
                       <!-- 背景图片 -->
-                      <image xlink:href="http://img05.tooopen.com/images/20150521/tooopen_sy_125610923736.jpg" x="0" y="0" height="100%" width="100%" preserveAspectRatio="xMidYMid slice"/>  
+                      <image :xlink:href="imgSrc" x="0" y="0" height="100%" width="100%" preserveAspectRatio="xMidYMid slice"/>  
                       
                       <!-- 要绘制的扇形 -->
                       <g clip-path="url(#6_SVGID_2_)" >
-                        <image :xlink:href="imgSrc" x="300" y="0" width="300" height="200" preserveAspectRatio="xMaxYMax slice" class="cp-img" />
+                        <image :xlink:href="cimg" x="300" y="0" width="300" height="200" preserveAspectRatio="xMaxYMax slice" class="cp-img" />
                       </g>
                      </svg>
                   </div><!-- //end motion-box -->
                 </div><!-- //end sbox-svg -->
              </div><!-- //end sbox-1 -->
-               
+           
+            <!-- 转场说明 -->  
+            <div class="effect-intro">{{title}}</div>       
           </div>
 
 
@@ -43,12 +45,14 @@
 
 
 <script scoped>
+    
+    import { mapGetters, mapMutations } from 'vuex';
 
     export default{
         data(){
             return{
-              imgSrc: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532604386990&di=614d672cf7c656d938dd4a37f141a362&imgtype=jpg&src=http%3A%2F%2Fimg4.imgtn.bdimg.com%2Fit%2Fu%3D2275076119%2C299053444%26fm%3D214%26gp%3D0.jpg',
-              cimg: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532859452724&di=17b9a56c303fb698e98992be7a5a1fbc&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201411%2F08%2F20141108212639_YQxLM.jpeg',
+              id:'m5',
+              title:'覆盖',
               timer: null
             }
         },
@@ -56,6 +60,14 @@
           timers:{
             type: Object,
             default: null
+          },
+          cimg:{
+            type: String,
+            default: require('@/common/images/term_back_sel.png')
+          },
+          imgSrc:{
+            type: String,
+            default: require('@/common/images/term_back_sel1.png')
           }
         },
         methods:{
@@ -63,6 +75,7 @@
             var This = this;
 
             $('.sbox-item-6').click(function(){
+              This.setMaskId(This.id);
               This.sectorfn($(this),$(this).find('.cp-img'));
             });
             
@@ -72,7 +85,7 @@
 
             var This = this,w = 300,x = 300,width = 300;
 
-            img.attr('xlink:href',this.cimg);
+            //img.attr('xlink:href',this.cimg);
             // elem1.get(0).setAttribute('transform', 'translate('+150+','+100+')');
             // elem2.get(0).setAttribute('transform', 'translate('+150+','+100+')');
             wrapper.addClass('sbox-item-active');
@@ -91,14 +104,29 @@
               
               if(x > 0){
                 img.attr({x:x});
-              }
-              
+              } 
             }
-
-          }
+          },
+          cancelStatus(){
+            cancelAnimationFrame(this.timer);
+            $('.sbox-item-6').removeClass('sbox-item-active');
+            $('.sbox-item-6').find('.cp-img').attr('x',300);
+          },
+          ...mapMutations({
+            setMaskId: 'maskid'
+          })
         },
         computed:{
-          
+          ...mapGetters({
+            getMaskId: 'maskid'
+          })
+        },
+        watch:{
+          getMaskId(nv,ov){
+            if(nv !== this.id){
+              this.cancelStatus();
+            }
+          }
         },
         mounted(){
           this.initEvent();

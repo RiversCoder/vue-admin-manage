@@ -2,7 +2,7 @@
       
           
           <!-- 十字动画 -->
-          <div class="sbox-item sbox-item-4">
+          <div class="sbox-item sbox-item-4" data-type='1'>
 
              <!--  十字展开 --> 
              <div class="sbox sbox-4">
@@ -30,18 +30,24 @@
                       </clipPath>
 
                       <!-- 背景图片 -->
-                      <image xlink:href="http://img05.tooopen.com/images/20150521/tooopen_sy_125610923736.jpg" x="0" y="0" height="100%" width="100%" preserveAspectRatio="xMidYMid slice"/>  
+                      <image :xlink:href="cimg" x="0" y="0" height="100%" width="100%" preserveAspectRatio="xMidYMid slice" class="cp-img-1"/>  
                       
                       <!-- 要绘制的扇形 -->
                       <g clip-path="url(#4_SVGID_2_)">
-                        <image xlink:href="" x="0" y="0" width="300" height="200" preserveAspectRatio="xMaxYMax slice" class="cp-img" />
+                        <image :xlink:href="imgSrc" x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"  />
                       </g>
                       
                      </svg>
                   </div><!-- //end motion-box -->
                 </div><!-- //end sbox-svg -->
+              
+              
+
              </div><!-- //end sbox-1 -->
-               
+            
+            <!-- 转场说明 -->  
+            <div class="effect-intro">{{title}}</div>  
+                
           </div>
 
 
@@ -51,12 +57,14 @@
 
 
 <script scoped>
+    
+    import { mapGetters, mapMutations } from 'vuex';
 
     export default{
         data(){
             return{
-              imgSrc: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532604386990&di=614d672cf7c656d938dd4a37f141a362&imgtype=jpg&src=http%3A%2F%2Fimg4.imgtn.bdimg.com%2Fit%2Fu%3D2275076119%2C299053444%26fm%3D214%26gp%3D0.jpg',
-              cimg: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1533454172&di=7fbfe6e806e49835f3ac47b4b303977b&imgtype=jpg&er=1&src=http%3A%2F%2Fimgtu.5011.net%2Fuploads%2Fcontent%2F20161010%2F3948821476066687.jpg',
+              id:'m1',
+              title: '十字扩展',
               timer: null
             }
         },
@@ -64,6 +72,14 @@
           timers:{
             type: Object,
             default: null
+          },
+          cimg:{
+            type: String,
+            default: require('@/common/images/term_back_sel.png')
+          },
+          imgSrc:{
+            type: String,
+            default: require('@/common/images/term_back_sel1.png')
           }
         },
         methods:{
@@ -72,7 +88,8 @@
 
             //1. 扇形交互动画
             $('.sbox-item-4').click(function(){
-              This.sectorfn($(this),$('#rects-1'),$('#rects-2'),$(this).find('.cp-img'));
+              This.setMaskId(This.id);
+              This.sectorfn($(this),$('#rects-1'),$('#rects-2'),$(this).find('.cp-img-1'));
             });
             
           },
@@ -111,16 +128,29 @@
               if(h > 0 ){
                 elem2.attr({y:y,'height':h});
               }
-
-
-              
-              
             }
-
-          }
+          },
+          cancelStatus(){
+            cancelAnimationFrame(this.timer);
+            $('.sbox-item-4').removeClass('sbox-item-active');
+            $('.sbox-item-4').find('#rects-1').attr({'width':'100%','x':0});
+            $('.sbox-item-4').find('#rects-2').attr({'height':'100%','y':0});
+          },
+          ...mapMutations({
+            setMaskId: 'maskid'
+          })
         },
         computed:{
-          
+          ...mapGetters({
+            getMaskId: 'maskid'
+          })
+        },
+        watch:{
+          getMaskId(nv,ov){
+            if(nv !== this.id){
+              this.cancelStatus();
+            }
+          }
         },
         mounted(){
           this.initEvent();

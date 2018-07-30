@@ -20,7 +20,8 @@ const state = {
     getAllDragBoxData: [], //获取所有当前可编辑元素的宽高位置类型等数据
     editEnable:'', //可编辑状态,
     showPosData: { x:0, y:0, w:0, y:0 }, // 拖拽坐标显示
-    publishData: [] //可上线资源
+    publishData: [], //可上线资源
+    maskid: 0 //已经选择的遮罩ID
 };
 
 export default state;

@@ -15,7 +15,13 @@
       
       <!-- 选择模板 -->
       <div class="select-special-box">
-        
+        <section class="ssb-title">
+          <span class="ssb-title-span ssb-title-1">效果</span>
+          <span class="ssb-title-span ssb-title-2">预览</span>
+        </section>
+        <section class="ssb-content">
+           <Transform :currentImg="currentImg"></Transform>
+        </section>
       </div>      
 
 
@@ -36,6 +42,7 @@
     
     import {mapState, mapGetters, mapMutations, mapActions} from 'vuex';
     import ItemView from '@/base/item-view/item-view';
+    import Transform from '@/base/transform/transform.vue';
     import datas from 'common/js/data';
     import tool from 'common/js/tool';
     import tools from 'common/js/lgc_tools';
@@ -52,7 +59,10 @@
               selectVideoId: [],
               selectImageId: [],
               fileId: [],
-              selectData: []
+              selectData: [],
+              currentImg: '',
+              currentItemId: 0,
+              playType: 0
             }
         },
         methods:{
@@ -63,23 +73,17 @@
               
               //获取当前本地的file_list数据
               data = tool.lget('file_list_'+this.$route.query.direct);
-
               this.selectData = pc.addEffectPage(data);
-              console.log(this.selectData);
               this.setResults(this.selectData);
+
             },
             ...mapMutations({
-              setSelect: 'select',
-              setResults: 'results'
+              
             }),
-            arrangeSource(){
+            initPos(cindex,dindex,cid,lastid){
 
-            },
-            initPos(cindex,dindex){
-              
-              
-              //重新计算位置
-              this.countPos(cindex,dindex);
+               //重新计算位置
+              this.countPos(cindex,dindex,cid,lastid);
 
               //替换DOM位置
               var parent = document.getElementById('item-drag-box-wrap');
@@ -90,10 +94,12 @@
               //重新排列位置
               this.arrangePos(parent,'item-drag-box');
               //重新绑定
-              this.bindDrag();  
-            },
-            countPos(ci,di){
+              this.bindDrag(); 
               
+            },
+            countPos(ci,di,cid,lastid){
+              console.log(ci,di,cid,lastid);
+
               var data = [];
               for(var i=0;i<this.selectData.length;i++){
                 data[i] = this.selectData[i];
@@ -102,7 +108,7 @@
               var newData = [];
               var i = 0,j = 0;
 
-              newData = data;
+              newData = pc.copy(data);
               if(ci > di){
                 newData.splice(di,0,data[ci]);
                 newData.splice(ci+1,1);
@@ -110,9 +116,11 @@
                 newData.splice(di,0,data[ci]);
                 newData.splice(ci,1);
               }
+
               for(var i=0;i<newData.length;i++){
                 this.selectData[i] = newData[i];
               }
+
               this.setResults(this.selectData);
             },
             arrangePos(parent,clsn,initBoolean){
@@ -131,6 +139,7 @@
                 childs[i].style.left = (i%row) * (childs[i].offsetWidth +10)  + 'px';
                 childs[i].style.top = Math.floor(i/row) * ( childs[i].offsetHeight + 10 ) + 'px';
               }
+
             },
             bindDrag(){
 
@@ -149,8 +158,8 @@
                 for(var i=0;i<childs.length;i++){
                   //设置拖拽
                   childs[i].index = i;
-                  tools.mdrag(childs[i],childs,'desktopIcons',(cindex,index)=>{
-                      this.initPos(cindex,index);
+                  tools.mdrag(childs[i],childs,'desktopIcons',(cindex,index,cid,lastid)=>{
+                      this.initPos(cindex,index,cid,lastid);
                   });
                 }
               }else{
@@ -159,9 +168,20 @@
                 for(var i=0;i<childs.length;i++){
                   //设置拖拽
                   childs[i].index = i;
-                  tools.drag(childs[i],childs,'desktopIcons',(cindex,index)=>{
-                      this.initPos(cindex,index);
+                  tools.drag(childs[i],childs,'desktopIcons',(cindex,index,cid,lastid)=>{
+                      this.initPos(cindex,index,cid,lastid);
                   },(citem,cindex,index)=>{
+
+                      //清除所有
+                      for(var j=0;j<childs.length;j++){
+                        $(childs[j]).removeClass('item-drag-box-active');
+                      }
+
+                      //console.log(citem,this.selectData);
+                      //this.currentImg = tool.new_getPreviewImgById(this.selectData,citem.dataset.id);
+                      //this.currentItemId = citem.dataset.id;
+                      this.currentImg = tool.new_getPreviewImgById(this.selectData,citem.dataset.id);
+                      //设置当前
                       $(citem).toggleClass('item-drag-box-active');
                   });
                 }
@@ -172,6 +192,7 @@
             //上一步
             lastBtn(){
               this.$router.back(-1);
+
             },
             //组装节目数据
             createStructor(data){
@@ -199,7 +220,7 @@
                 }
                 //设置素材展示的本地缓存
                 tool.lset('file_list_'+this.$route.query.direct,[]);
-                
+                console.log(this.selectData,this.currentItemId);
                 //将素材序列存在vuex状态树中
                 this.stroreDataToTimeLists(newArr);
 
@@ -230,21 +251,53 @@
                 }
               });
             },
+            //设置每个素材的 playType (遮罩类型)
+            setPlayType(){
+              var This = this;
+              
+              
+              //检测素材的遮罩
+              $('.item-drag-box').each(function(index,ele){
+                if(ele.classList.contains('item-drag-box-active')){
+                  This.currentItemId = ele.dataset.id;
+                  return false;
+                }
+              });
+
+              if(this.currentItemId == 0){
+                return;
+              }
+
+              console.log(this.getResults,this.currentItemId);
+
+              var data = pc.getNewSourceDataById(this.getResults,this.currentItemId,this.playType);
+              //this.selectData = pc.copy(data);
+              //console.log(data);
+              //console.log(this.selectData);
+              this.setResults(data);
+            },
             ...mapMutations({
               setTimeLists: 'timeList',
-              setModelId: 'select_model_id'
+              setModelId: 'select_model_id',
+              setSelect: 'select',
+              setResults: 'results'
             })
         },
         watch:{
-          
+          getMaskId(nv,ov){
+            this.playType = nv.substr(1,1)*1;
+            this.setPlayType();
+          }
         },
         computed:{
           ...mapGetters({
+            'getResults':'results',
             'source':'source',
             'selectid': 'selectid',
             'getTimeId': 'timelist_cid',
             'getTimeLists': 'timeList',
-            'getModelId': 'select_model_id'
+            'getModelId': 'select_model_id',
+            'getMaskId': 'maskid'
           })
         },
         created(){
@@ -255,7 +308,8 @@
           this.bindDrag();
         },
         components:{
-          ItemView
+          ItemView,
+          Transform
         }
     }
 </script>
@@ -268,6 +322,17 @@
     .btnStyle{
         bgColor(#F4F4F4);color:#333;font-size:18px;initp();border-radius:10px;
      }
+     
+    .select-special-box
+      wh(100%,auto);overflow:hidden;clear:both;@extend .rp;
+      .ssb-title
+        wh(15%,100%);abs();top:0;bottom:0;font-size:22px;@extend .rp;bgColor(#dedede);
+        .ssb-title-span
+          @extend .block;wh(100%,20px);line-height:20px;text-align:center;margin-top:23%;color:#666;
+          
+      .ssb-content
+        wh(85%,100%);overflow-y:hidden;overflow-x:auto;@extend .rp;float:right;
+
     .el-main
       padding-left:20px;padding-top:20px;
     .header-file

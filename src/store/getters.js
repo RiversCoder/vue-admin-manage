@@ -85,3 +85,7 @@ export const publishData = function(state){
     return state.publishData;
 }
 
+export const maskid = function(state){
+    return state.maskid;
+}
+

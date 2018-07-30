@@ -40,5 +40,9 @@ export const SET_EDIT_ENABLE = 'editEnable'
 
 export const SET_POS_WIDTH = 'setPosWidth'
 
-
 export const  SET_PUBLISH_DATA = 'publishData'
+
+export const SET_MASK_ID = 'maskid'
+
+
+

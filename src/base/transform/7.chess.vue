@@ -2,7 +2,7 @@
       
           
           <!-- 棋盘动画 -->
-          <div class="sbox-item sbox-item-7">
+          <div class="sbox-item sbox-item-7" data-type="7">
 
              <!--  棋盘展开 --> 
              <div class="sbox sbox-7">
@@ -17,7 +17,9 @@
                   </div><!-- //end motion-box -->
                 </div><!-- //end sbox-svg -->
              </div><!-- //end sbox-1 -->
-               
+            
+            <!-- 转场说明 -->  
+            <div class="effect-intro">{{title}}</div>   
           </div>
 
 
@@ -27,12 +29,14 @@
 
 
 <script scoped>
+    
+    import { mapGetters, mapMutations } from 'vuex';
 
     export default{
         data(){
             return{
-              imgSrc: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532604386990&di=614d672cf7c656d938dd4a37f141a362&imgtype=jpg&src=http%3A%2F%2Fimg4.imgtn.bdimg.com%2Fit%2Fu%3D2275076119%2C299053444%26fm%3D214%26gp%3D0.jpg',
-              cimg: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532627805987&di=e59ac1eb42e3d050c81cdf77465eda6d&imgtype=0&src=http%3A%2F%2Fpic35.photophoto.cn%2F20150629%2F0036036319421772_b.jpg',
+              id:'m7',
+              title: '棋盘',
               timer: null,
               tiimg:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532844894449&di=2a046505cf28d75564baa61a9adc7d52&imgtype=0&src=http%3A%2F%2Fold.bz55.com%2Fuploads%2Fallimg%2F150422%2F139-1504221GZ3.jpg'
             }
@@ -41,6 +45,14 @@
           timers:{
             type: Object,
             default: null
+          },
+          cimg:{
+            type: String,
+            default: require('@/common/images/term_back_sel.png')
+          },
+          imgSrc:{
+            type: String,
+            default: require('@/common/images/term_back_sel1.png')
           }
         },
         methods:{
@@ -48,7 +60,8 @@
             var This = this;
 
             $('.sbox-item-7').click(function(){
-
+              This.setMaskId(This.id);
+              This.initDraw();
               This.sectorfn($(this),$(this).find('.cb-box'));
             });
             
@@ -70,7 +83,7 @@
               var cstr = `<div class="cb-row-box" style="width:${rw*row}px;height:${rh}px;top:${rh*i}px;left:${ i%2==0 ? -parseInt(rw/2) : 0 }px;">`;
               rstr = '';
               for(var j=0;j<row;j++){
-                rstr += `<div class="cb-box" style="width:${rw}px;height:${rh}px;left:${rw*j}px;top:0px; background-image:url('http://hiphotos.baidu.com/image/w=730;crop=0,0,730,405/sign=8630d99f963df8dca63d8d92fd2a11f9/0824ab18972bd407c305049572899e510eb3099c.jpg');background-size:${width*8/6}px ${height*8/6}px;background-position:${ i%2==0 ? -rw*j : -rw*j-parseInt(rw/2) }px ${-rh*i}px;" data-row="${i} "></div>`;
+                rstr += `<div class="cb-box" style="width:${rw}px;height:${rh}px;left:${rw*j}px;top:0px; background-image:url('${this.cimg}');background-size:${width*8/6}px ${height*8/6}px;background-position:${ i%2==0 ? -rw*j : -rw*j-parseInt(rw/2) }px ${-rh*i}px;" data-row="${i} "></div>`;
               }
               cstr = cstr + rstr + '</div>';
               astr += cstr;
@@ -86,7 +99,7 @@
             elem.each(function(index,ele){
               $(ele).css({
                 'width': 0,
-                'background-image': "url("+This.tiimg+")"
+                'background-image': "url("+This.cimg+")"
               });
             });
             wrapper.addClass('sbox-item-active');
@@ -125,17 +138,33 @@
                 w1 = 0;
                 //cancelAnimationFrame(This.timer);
                 //return;
-              }
-              
+              } 
             }
-
-          }
+          },
+          cancelStatus(){
+            cancelAnimationFrame(this.timer);
+            $('.sbox-item-7').removeClass('sbox-item-active');
+            $('.sbox-item-7').find('.cb-box').each(function(index,ele){
+              $(ele).css('width',0);
+            });
+          },
+          ...mapMutations({
+            setMaskId: 'maskid'
+          })
         },
         computed:{
-          
+          ...mapGetters({
+            getMaskId: 'maskid'
+          })
+        },
+        watch:{
+          getMaskId(nv,ov){
+            if(nv !== this.id){
+              this.cancelStatus();
+            }
+          }
         },
         mounted(){
-          this.initDraw();
           this.initEvent();
         }
     }

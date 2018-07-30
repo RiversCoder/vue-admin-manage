@@ -2,7 +2,7 @@
       
           
           <!-- 棋盘动画 -->
-          <div class="sbox-item sbox-item-8">
+          <div class="sbox-item sbox-item-8" data-type='4'>
 
              <!--  棋盘展开 --> 
              <div class="sbox sbox-8">
@@ -10,7 +10,7 @@
 
                   <!-- 动效部分 -->
                   <div class="motion-box">
-                     <img :src="cimg" class="mbox-img">
+                     <img :src="imgSrc" class="mbox-img">
                      <div class="diss-box" id="diss-box">
                         
 
@@ -21,7 +21,9 @@
                   </div><!-- //end motion-box -->
                 </div><!-- //end sbox-svg -->
              </div><!-- //end sbox-1 -->
-               
+            
+            <!-- 转场说明 -->  
+            <div class="effect-intro">{{title}}</div>    
           </div>
 
 
@@ -31,12 +33,14 @@
 
 
 <script scoped>
+    
+    import { mapGetters, mapMutations } from 'vuex';
 
     export default{
         data(){
             return{
-              imgSrc: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532604386990&di=614d672cf7c656d938dd4a37f141a362&imgtype=jpg&src=http%3A%2F%2Fimg4.imgtn.bdimg.com%2Fit%2Fu%3D2275076119%2C299053444%26fm%3D214%26gp%3D0.jpg',
-              cimg: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532627805987&di=e59ac1eb42e3d050c81cdf77465eda6d&imgtype=0&src=http%3A%2F%2Fpic35.photophoto.cn%2F20150629%2F0036036319421772_b.jpg',
+              id: 'm4',
+              title: '溶解',
               timer: null,
               tiimg:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532844894449&di=2a046505cf28d75564baa61a9adc7d52&imgtype=0&src=http%3A%2F%2Fold.bz55.com%2Fuploads%2Fallimg%2F150422%2F139-1504221GZ3.jpg'
             }
@@ -45,13 +49,24 @@
           timers:{
             type: Object,
             default: null
+          },
+          cimg:{
+            type: String,
+            default: require('@/common/images/term_back_sel.png')
+          },
+          imgSrc:{
+            type: String,
+            default: require('@/common/images/term_back_sel1.png')
           }
         },
         methods:{
 
           initEvent(){
             var This = this;
+
             $('.sbox-item-8').click(function(){
+              This.setMaskId(This.id);
+              This.initDraw();
               This.sectorfn($(this),$(this).find('.cb-box'));
             });
           },
@@ -64,7 +79,6 @@
             var height = $('.diss-box').height();
             var rw = Math.floor(width/6);
             var rh = Math.floor(height/col);
-            //console.log(rh)
             var crw = Math.floor(width/row);
             var cstr = '';
             var rstr = '';
@@ -93,7 +107,7 @@
             //get 当前图片
             elem.each(function(index,ele){
               $(ele).css({
-                'background-image': "url("+This.tiimg+")",
+                'background-image': "url("+This.cimg+")",
                 'opacity': 0,
                 'transition': 'ease .5s'
               });
@@ -135,13 +149,31 @@
                 //return;
               }
             }
-          }
+          },
+          cancelStatus(){
+            cancelAnimationFrame(this.timer);
+            $('.sbox-item-8').removeClass('sbox-item-active');
+            $('.sbox-item-8').find('.cb-box').each(function(index,ele){
+              $(ele).css('opacity',0);
+            });
+          },
+          ...mapMutations({
+            setMaskId: 'maskid'
+          })
         },
         computed:{
-          
+          ...mapGetters({
+            getMaskId: 'maskid'
+          })
+        },
+        watch:{
+          getMaskId(nv,ov){
+            if(nv !== this.id){
+              this.cancelStatus();
+            }
+          }
         },
         mounted(){
-          this.initDraw();
           this.initEvent();
         }
     }

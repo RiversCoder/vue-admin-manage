@@ -121,6 +121,7 @@
             //初始化当前位置下已经选择的数据
             initSelectedData(){
               this.cFiles = pc.getFilesDataById(this.getTimeLists,this.getModelId);
+              console.log(this.cFiles);
               tool.lset('file_list_',this.cFiles);
             },
             //点击搜索
@@ -187,7 +188,7 @@
                 });
                 return;
               }
-
+                 
               //console.log(this.$route.query.direct)
 
               //跳转到拖拽面板页面

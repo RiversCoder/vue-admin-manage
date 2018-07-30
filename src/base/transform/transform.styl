@@ -2,28 +2,29 @@
 @import "~common/stylus/mixin"
 
 .svg-transform-wrapper
-  wh(100%,200px);bgColor(#eee);@extend .rp;display:flex;flex-wrap: wrap;
+  wh(1800px,auto);@extend .rp;display:flex;flex-wrap: nowrap;
   
   .sbox-item
-    wh(300px,auto);bgColor(yellow);@extend .rp;box-sizing:border-box;overflow:hidden;margin-left:10px;
+    wh(300px,auto);@extend .rp;box-sizing:border-box;overflow:hidden;margin-left:10px;border:2px solid rgba(0,0,0,0);
     .sbox
       wh(100%,0);padding-top:66%;@extend .rp;
       .sbox-svg
         ab(0,0);wh(100%,100%);
-      
         .motion-box
           wh(100%,100%);
           .mbox-img
-            wh(100%,100%);ab(0,0);
+            wh(120%,100%);ab(-10%,0%);
           .chess-box,.diss-box
             wh(100%,100%);@extend .rp;overflow:hidden;
             .cb-row-box
               abs();left:0;
             .cb-box
-              abs();box-sizing:border-box;background-repeat:no-repeat;    
+              abs();box-sizing:border-box;background-repeat:no-repeat;
+    .effect-intro
+      color:#fff;abs();left:0;bottom:0;width:100%;hh(25px);font-size:12px;text-align:center;color:#fff;bgColor(rgba(102,102,102,0.8));              
 
   .sbox-item-active
-    border:2px solid red;
+    border:2px solid #4697cf;
     
 
       
