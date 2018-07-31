@@ -595,6 +595,5 @@ export default {
       }
 
       return data;
-
     }
 }

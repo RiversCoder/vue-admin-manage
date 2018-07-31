@@ -80,6 +80,9 @@
               });
               return;
             }else{
+
+
+
               if(this.getTimelistCid == -1){
                 //提示需要选择时间项
                 this.$message({
@@ -89,9 +92,37 @@
                 });
                 return;
               }else{
-                this.$router.push({
-                    path: '/pc/pe'
-                })
+
+                //检测是否有文件选中
+                //console.log(this.svgData);
+                var onoff = false;
+                for(var i=0;i<this.svgData.length;i++){
+                  if(this.svgData[i].src){
+                    onoff = true;
+                  }
+                }
+
+                if(onoff){
+                    //需要弹窗
+                  this.$confirm('此操作将删除该时间模板下内容, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                  }).then(() => {
+                    this.$router.push({
+                      path: '/pc/pe'
+                    });
+                  }).catch(() => {
+                    this.$message({
+                      type: 'info',
+                      message: '已取消操作'
+                    });          
+                  });
+                }else{
+                  this.$router.push({
+                      path: '/pc/pe'
+                  });
+                }
 
               }
               

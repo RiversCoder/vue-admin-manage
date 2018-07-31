@@ -10,7 +10,7 @@
                            <img :src="item.img" />
                        </span>
                        <span :class="item.file_type == '1' ? 'vcip-icon' : 'vcip-icon icip-icon' "></span>
-                       <span class="vcip-name">{{item.file_name.length<12?item.file_name:item.file_name.substr(0,12)+'...'}}</span>
+                       <span class="vcip-name">{{ item.file_name.length > 12 ? item.file_name.substr(0,12) + '...' : item.file_name }}</span>
                        <span class="vcip-effect">转场效果：{{transformName[item.playType]}}</span>
 
                  </dt>
@@ -20,7 +20,6 @@
            </div>
        </div>
       
-
        <!-- <div v-if="imageExist">
          <h3 class="column-title">图片</h3>
          <div class="column-content" >
@@ -55,7 +54,8 @@
                transformID: ['m0','m1','m2','m3','m4','m5','m6','m7','m8'],
                transformName: ['无','十字扩展','百叶窗','扇形展开','溶解','覆盖','时钟','棋盘','分割'],
                sourcess:[],
-               playType: 0
+               playType: 0,
+               datas: []
             }
         },
         props: {
@@ -68,15 +68,7 @@
         },
         methods:{
           getTranNamebyId(id){
-            var index =  0;
-            for(var i=0;i<this.transformID.length;i++){
-              if(this.transformID[i] == id){
-                index = i;
-                break;
-              }
-            }
-            this.playType = index;
-            return this.transformName[index];
+            //
           },
           ...mapMutations({
             setSelect:'select'
@@ -84,14 +76,27 @@
         },
         computed:{
           ...mapGetters({
-            'results':'results',
+            'getResults':'results',
             'getMaskId': 'maskid'
           })
         },
         watch:{
-
+          getResults:{
+            handler(nv,ov){
+              //this.results = nv;
+              this.datas = nv;
+              //console.log(nv);
+            },
+            deep:true
+          }
         },
+        created(){
+          //console.log('重新加载组建了');
+          this.datas = this.getResults;
+          //console.log(this.datas);
+        },  
         mounted(){
+          //console.log(this.sources);
           //console.log(this.sources);
         }
     }

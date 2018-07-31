@@ -20,6 +20,7 @@ import DragFile from '@/components/drag-file/drag-file'
 import ProgramEdit from '@/components/program-edit/program-edit'
 import PC from '@/components/pc/pc'
 import DeviceManage from '@/components/device-manage/device-manage'
+import SelectMask from '@/components/select-mask/select-mask'
 
 import ListView from '@/base/list-view/list-view'
 import ItemView from '@/base/item-view/item-view'
@@ -95,6 +96,14 @@ const router =  new Router({
               requireAuth: true,
               keepAlive: false 
             }
+          },
+          {
+            path: 'mask',
+            component: SelectMask,
+            meta: { 
+              requireAuth: true,
+              keepAlive: false
+            } 
           }]
         },
         {
@@ -143,6 +152,14 @@ const router =  new Router({
             {
               path: 'order',
               component: DragFile,
+              meta: { 
+                requireAuth: true,
+                keepAlive: false
+              } 
+            },
+            {
+              path: 'mask',
+              component: SelectMask,
               meta: { 
                 requireAuth: true,
                 keepAlive: false

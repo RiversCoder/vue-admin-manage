@@ -2,19 +2,19 @@
    <div class="con-container">
       <header class="header-file" style="min-height:108px">
             <div class="grid-content grid-content-1">
-               <h3 class="drag-cc-title">素材拖拽排序</h3>
+               <h3 class="drag-cc-title">选择转场效果</h3>
                <!-- <h3 class="drag-cc-title drag-cc-title-mobile">素材点击排序</h3> -->
             </div>
             <div class="grid-content grid-content-2">
                 <p style="display:none"><input name="file" type="file" value="选择" size="20" id="fileUpload1" accept="image/png,image/gif,image/jpeg,video/mp4,application/ogg, audio/ogg,video/3gpp" @change ="changeUploadFile($event)" /></p>  
-                <el-button plain class="rbtn uploadFile" @click.native="nextBtn">下一步</el-button>
+                <el-button plain class="rbtn uploadFile" @click.native="nextBtn">提交</el-button>
                 <el-button plain class="rbtn newFolder" @click.native="lastBtn">上一步</el-button>
             </div>
       </header>
       
       
       <!-- 选择模板 -->
-      <!-- <div class="select-special-box">
+      <div class="select-special-box">
         <section class="ssb-title">
           <span class="ssb-title-span ssb-title-1">效果</span>
           <span class="ssb-title-span ssb-title-2">预览</span>
@@ -22,7 +22,7 @@
         <section class="ssb-content">
            <Transform :currentImg="currentImg"></Transform>
         </section>
-      </div>  -->     
+      </div>      
 
 
       <el-main>
@@ -75,7 +75,7 @@
               //获取当前本地的file_list数据
               data = tool.lget('file_list_'+this.$route.query.direct);
               this.selectData = pc.addEffectPage(data);
-              this.setResults(this.selectData);
+              //this.setResults(this.selectData);
 
             },
             initPos(cindex,dindex,cid,lastid){
@@ -90,18 +90,18 @@
               parent.insertBefore(childs[cindex],childs[dindex]);
               
               //重新排列位置
-              this.arrangePos(parent,'item-drag-box');
+              //this.arrangePos(parent,'item-drag-box');
               //重新绑定
-              this.bindDrag(); 
+              //this.bindDrag(); 
               
             },
             countPos(ci,di,cid,lastid){
               //console.log(ci,di,cid,lastid);
 
-              var data = [];
-              for(var i=0;i<this.selectData.length;i++){
-                data[i] = this.selectData[i];
-              }
+              var data = pc.copy(this.selectData);
+              // for(var i=0;i<this.selectData.length;i++){
+              //   data[i] = this.selectData[i];
+              // }
               
               var newData = [];
               var i = 0,j = 0;
@@ -115,9 +115,10 @@
                 newData.splice(ci,1);
               }
 
-              for(var i=0;i<newData.length;i++){
-                this.selectData[i] = newData[i];
-              }
+              // for(var i=0;i<newData.length;i++){
+              //   this.selectData[i] = newData[i];
+              // }
+              this.selectData = pc.copy(newData);
               this.setResults(this.selectData);
             },
             arrangePos(parent,clsn,initBoolean){
@@ -155,9 +156,9 @@
                 for(var i=0;i<childs.length;i++){
                   //设置拖拽
                   childs[i].index = i;
-                  tools.mdrag(childs[i],childs,'desktopIcons',(cindex,index,cid,lastid)=>{
-                      this.initPos(cindex,index,cid,lastid);
-                  });
+                  // tools.mdrag(childs[i],childs,'desktopIcons',(cindex,index,cid,lastid)=>{
+                  //     this.initPos(cindex,index,cid,lastid);
+                  // });
                 }
               }else{
 
@@ -166,10 +167,10 @@
                   //设置拖拽
                   childs[i].index = i;
                   tools.drag(childs[i],childs,'desktopIcons',(cindex,index,cid,lastid)=>{
-                      this.initPos(cindex,index,cid,lastid);
-                      $('.item-drag-box').each(function(index,ele){
-                        $(ele).removeClass('item-drag-box-active');
-                      });
+                      // this.initPos(cindex,index,cid,lastid);
+                      // $('.item-drag-box').each(function(index,ele){
+                      //   $(ele).removeClass('item-drag-box-active');
+                      // });
                   },(citem,cindex,index)=>{
 
                       //清除所有
@@ -192,16 +193,7 @@
             //上一步
             lastBtn(){
               this.$router.back(-1);
-            },
-            //下一步
-            nextBtn(){
 
-              //首先把数据保存到本地 然后提交到数据库
-              this.createStructor(this.selectData);
-
-              this.$router.push({'path':'/pc/mask','query':{direct:''}});
-
-              
             },
             //组装节目数据
             createStructor(data){
@@ -226,10 +218,9 @@
                       "playType": data[i]['playType'],
                       "times": data[i]['times']
                     });
-                };
-
+                }
                 //设置素材展示的本地缓存
-                tool.lset('file_list_'+this.$route.query.direct,this.selectData);
+                tool.lset('file_list_'+this.$route.query.direct,[]);
                 //console.log(this.selectData,this.currentItemId);
                 //将素材序列存在vuex状态树中
                 this.stroreDataToTimeLists(newArr);
@@ -247,7 +238,7 @@
               this.setTimeLists(newArrs);
             },  
             //提交
-            nextBtn2(){
+            nextBtn(){
               
               //首先把数据保存到本地 然后提交到数据库
               this.createStructor(this.selectData);
